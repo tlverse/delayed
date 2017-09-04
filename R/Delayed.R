@@ -1,10 +1,10 @@
-# state diagram
-# (waiting->ready->running->resolved seems to be enough for our purposes)
-
+#' Delayed class that manages dependencies and computes when necessary
 #' @docType class
 #' @importFrom R6 R6Class
+#' @importFrom igraph make_empty_graph edge vertex V
 #' @importFrom future resolved
 #' @importFrom data.table address
+#' @rdname DelayedClass
 #' @export
 Delayed=R6Class(classname = "Delayed",
                      cloneable = FALSE,
@@ -140,13 +140,17 @@ Delayed=R6Class(classname = "Delayed",
                      )
 )
 
-# todo, combine delayed and delayed_fun
+#' Generates a delayed version of an expression
+#' @param expr expression to delay
+#' @rdname delayed
 #' @export
 delayed <- function(expr){
   qexpr <- enquo(expr)
   Delayed$new(qexpr)
 }
 
+#' @param fun function to delay
+#' @rdname delayed
 #' @export
 delayed_fun <- function(fun){
   fun_name <- as.character(match.call()[[2]])

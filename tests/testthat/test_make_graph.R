@@ -2,7 +2,7 @@ library(delayed)
 library(testthat)
 
 context("make_graph")
-load_all()
+
 
 test_that("can plot graph",{
   adder <- function(x,y){x+y}

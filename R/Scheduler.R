@@ -1,3 +1,4 @@
+#' Scheduler class that orders compute tasks and dispatches tasks to workers via \code{make_future()}
 #' @docType class
 #' @importFrom R6 R6Class
 #' @importFrom rstackdeque rstack

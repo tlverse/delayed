@@ -11,11 +11,9 @@ Imports: R6,
          igraph,
          future,
          rstackdeque,
-         sl3,
          rlang,
          data.table,
          assertthat
 RoxygenNote: 6.0.1
 Suggests: testthat
-Remotes:
-  github::jeremyrcoyle/sl3
+

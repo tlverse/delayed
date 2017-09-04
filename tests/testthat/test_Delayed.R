@@ -2,9 +2,9 @@ library(delayed)
 library(testthat)
 library(rlang)
 context("Delayed")
-load_all()
 
 #this fails because expects an actual expression
+#todo: make delay idempotent for objects
 # test_that("can generate delayed from simple expression",{
 #   d <- delayed(3)
 #   d$resolve()
