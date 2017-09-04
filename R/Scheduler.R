@@ -36,7 +36,7 @@ Scheduler=R6Class(classname = "Scheduler",
                            
                            current_task <- self$next_ready_task
                            if(!is.null(current_task)){
-                             print(current_task)
+                             # print(current_task)
                              current_task$make_future()
                            }
                          }
