@@ -8,7 +8,7 @@ Scheduler <- R6Class(classname = "Scheduler",
                         portable = TRUE,
                         class = TRUE,
                         public = list(
-                          initialize = function(delayed_object, JobType = FutureJob, workers = NULL, nworkers = 1, verbose = FALSE, ...) {
+                          initialize = function(delayed_object, job_type = FutureJob, nworkers = NULL, verbose = FALSE, ...) {
                             private$.delayed_object <- delayed_object
                             
                             private$.task_lists <- list(waiting = env(),
@@ -18,11 +18,14 @@ Scheduler <- R6Class(classname = "Scheduler",
                             )
                             
                             self$enumerate_tasks(delayed_object)
-                            private$.job_type <- JobType
+                            private$.job_type <- job_type
                             
-                            if(!is.null(workers)){
-                              private$.workers <- workers
-                              nworkers <- length(workers)
+                            if(is.null(nworkers)){
+                              if(job_type$classname=="FutureJob"){
+                                nworkers = future::availableCores()
+                              } else {
+                                nworkers = 1
+                              }
                             }
                             private$.nworkers <- nworkers
                             private$.verbose <- verbose

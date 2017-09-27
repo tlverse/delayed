@@ -15,7 +15,7 @@ library(delayed)
 
 R supports a range of options to parallelize computation. For an overview, see The [HPC Task View](https://cran.r-project.org/web/views/HighPerformanceComputing.html) on CRAN for an . In general, these options work extremely well for problems that are _embarassingly parallel_, in that they support things like parallel `lapply` and parallel `for` loops (essentially `map` operations). However, there is no easy way to parallelize _dependent_ tasks in R. 
 
-In contrast, python has the excellent [`dask`](http://dask.pydata.org/en/latest/) framework , which makes it easy to build up a graph of interdependent tasks and then execute them in parallel in an order that optimizes performance. The current package seeks to reproduce a subset of that functionality in R, specifically the [`delayed`](http://dask.pydata.org/en/latest/delayed.html) module. To parallelize across the tasks, we leverage the excellent [`future`](https://github.com/HenrikBengtsson/future/tree/master/R) package.
+In contrast, python has the excellent [`dask`](http://dask.pydata.org/en/latest/) framework , which makes it easy to build up a graph of interdependent tasks and then execute them in parallel in an order that optimizes performance. The current package seeks to reproduce a subset of that functionality in R, specifically the [`delayed`](http://dask.pydata.org/en/latest/delayed.html) module. To parallelize across the tasks, we leverage the excellent [`future`](https://github.com/HenrikBengtsson/future/) package.
 
 
 ## Example
@@ -85,7 +85,7 @@ delayed_object <- delayed(3+4)
 delayed_object2 <- delayed(1+2)
 chained_delayed <- delayed_adder(delayed_object, delayed_object2)
 
-#compute it using two workers, verbose mode lets us see the computation order
+#compute it using the future plan (two multicore workers), verbose mode lets us see the computation order
 chained_delayed$compute(nworkers=2, verbose=TRUE)
 ```
 

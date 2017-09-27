@@ -79,7 +79,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <p>R supports a range of options to parallelize computation. For an overview, see The <a href="https://cran.r-project.org/web/views/HighPerformanceComputing.html">HPC Task View</a> on CRAN for an . In general, these options work extremely well for problems that are <em>embarassingly parallel</em>, in that they support things like parallel <code>lapply</code> and parallel <code>for</code> loops (essentially <code>map</code> operations). However, there is no easy way to parallelize <em>dependent</em> tasks in R.</p>
-<p>In contrast, python has the excellent <a href="http://dask.pydata.org/en/latest/"><code>dask</code></a> framework , which makes it easy to build up a graph of interdependent tasks and then execute them in parallel in an order that optimizes performance. The current package seeks to reproduce a subset of that functionality in R, specifically the <a href="http://dask.pydata.org/en/latest/delayed.html"><code>delayed</code></a> module. To parallelize across the tasks, we leverage the excellent <a href="https://github.com/HenrikBengtsson/future/tree/master/R"><code>future</code></a> package.</p>
+<p>In contrast, python has the excellent <a href="http://dask.pydata.org/en/latest/"><code>dask</code></a> framework , which makes it easy to build up a graph of interdependent tasks and then execute them in parallel in an order that optimizes performance. The current package seeks to reproduce a subset of that functionality in R, specifically the <a href="http://dask.pydata.org/en/latest/delayed.html"><code>delayed</code></a> module. To parallelize across the tasks, we leverage the excellent <a href="https://github.com/HenrikBengtsson/future/"><code>future</code></a> package.</p>
 <div id="example" class="section level2">
 <h2>Example</h2>
 <p>The two main ways to generate <code>Delayed</code> objects in R are via the <code>delayed</code> and <code>delayed_fun</code> functions. <code>delayed</code> delays expressions, while <code>delayed_fun</code> wraps a function so that it returns <code>Delayed</code> results</p>
@@ -120,8 +120,8 @@ chained_delayed<span class="op">$</span><span class="kw">compute</span>()</code>
 <pre><code>## [1] 10</code></pre>
 <p>We can visualize the dependency structure of these delayed tasks by calling <code>plot</code> on the resulting object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(chained_delayed)</code></pre></div>
-<div id="htmlwidget-a574f55b7e60556f5ebe" style="width:100%;height:288px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a574f55b7e60556f5ebe">{"x":{"nodes":{"id":["0x7fa324ad4ea8","0x7fa324ea5910","0x7fa324d6f520"],"label":["adder(x = delayed_object, y = delayed_object2)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"color":["green","green","green"]},"edges":{"from":["0x7fa324ea5910","0x7fa324d6f520"],"to":["0x7fa324ad4ea8","0x7fa324ad4ea8"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"direction":"RL"}}},"groups":null,"width":"100%","height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-31ed810777c5772b0125" style="width:100%;height:288px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-31ed810777c5772b0125">{"x":{"nodes":{"id":["0x7fc673f49b20","0x7fc675fbdb48","0x7fc6768cb190"],"label":["adder(x = delayed_object, y = delayed_object2)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"color":["green","green","green"]},"edges":{"from":["0x7fc675fbdb48","0x7fc6768cb190"],"to":["0x7fc673f49b20","0x7fc673f49b20"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"direction":"RL"}}},"groups":null,"width":"100%","height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="parallelization" class="section level2">
 <h2>Parallelization</h2>
@@ -134,12 +134,12 @@ delayed_object &lt;-<span class="st"> </span><span class="kw">delayed</span>(<sp
 delayed_object2 &lt;-<span class="st"> </span><span class="kw">delayed</span>(<span class="dv">1</span><span class="op">+</span><span class="dv">2</span>)
 chained_delayed &lt;-<span class="st"> </span><span class="kw">delayed_adder</span>(delayed_object, delayed_object2)
 
-<span class="co">#compute it using two workers, verbose mode lets us see the computation order</span>
+<span class="co">#compute it using the future plan (two multicore workers), verbose mode lets us see the computation order</span>
 chained_delayed<span class="op">$</span><span class="kw">compute</span>(<span class="dt">nworkers=</span><span class="dv">2</span>, <span class="dt">verbose=</span><span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## run:0 ready:2 workers:2</code></pre>
-<pre><code>## updating 3 + 4 from ready to running</code></pre>
-<pre><code>## run:1 ready:1 workers:2</code></pre>
 <pre><code>## updating 1 + 2 from ready to running</code></pre>
+<pre><code>## run:1 ready:1 workers:2</code></pre>
+<pre><code>## updating 3 + 4 from ready to running</code></pre>
 <pre><code>## run:2 ready:0 workers:2</code></pre>
 <pre><code>## updating 3 + 4 from running to resolved</code></pre>
 <pre><code>## updating 1 + 2 from running to resolved</code></pre>
@@ -159,7 +159,7 @@ chained_delayed<span class="op">$</span><span class="kw">compute</span>(<span cl
 </div>
 <div id="distributed-data" class="section level3">
 <h3>Distributed Data</h3>
-<p>One of the other key features of dask is <em>data locality</em>. That is, data is only on workers that need it for given tasks, and is only shared between workers when necessary. Tasks are then prioritized to workers that have all the necessary components. We have begun to implement a similar framework.</p>
+<p>One of the other key features of dask is <a href="https://distributed.readthedocs.io/en/latest/locality.html"><em>data locality</em></a>. That is, data is only on workers that need it for given tasks, and is only shared between workers when necessary. Tasks are then prioritized to workers that have all the necessary components. We have begun to implement a similar framework.</p>
 </div>
 </div>
 

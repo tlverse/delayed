@@ -34,7 +34,7 @@ time_sequential <- system.time({
   result_sequential <- big_adder$compute(SequentialJob)
 })
 
-nworkers = 4
+nworkers = 2
 
 big_adder <- make_random_adder_graph(adder_seed)
 plan(multicore, workers = nworkers)
@@ -43,14 +43,14 @@ time_future_mc <- system.time({
   result_future_mc <- big_adder$compute(FutureJob, nworkers=nworkers)
 })
 
-big_adder <- make_random_adder_graph(adder_seed)
-plan(multisession, workers = nworkers)
-Sys.sleep(0.5)
-time_future_ms <- system.time({
-  result_future_ms <- big_adder$compute(FutureJob, nworkers=nworkers)
-})
-
-data.frame(val=c(result_sequential, result_future_mc, 
-                 result_future_ms), 
-           time=rbind(time_sequential, time_future_mc, 
-                      time_future_ms))
+# big_adder <- make_random_adder_graph(adder_seed)
+# plan(multisession, workers = nworkers)
+# Sys.sleep(0.5)
+# time_future_ms <- system.time({
+#   result_future_ms <- big_adder$compute(FutureJob, nworkers=nworkers)
+# })
+# 
+# data.frame(val=c(result_sequential, result_future_mc, 
+#                  result_future_ms), 
+#            time=rbind(time_sequential, time_future_mc, 
+#                       time_future_ms))
