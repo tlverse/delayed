@@ -65,6 +65,7 @@ SequentialJob <- R6Class(classname = "SequentialJob",
 #' A Job that leverages the \code{future} framework to evaluate asynchronously
 #' @docType class
 #' @importFrom R6 R6Class
+#' @importFrom future future resolved value
 #' @export
 FutureJob <- R6Class(classname = "FutureJob",
                   cloneable = FALSE,
