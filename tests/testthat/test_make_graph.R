@@ -14,6 +14,6 @@ test_that("can plot graph",{
   z2 <- delayed_adder(z,4)
   z3 <- delayed_adder(z2,z)
   
-  graph <- z3$make_graph()
-  plot(graph,vertex.size=100, vertex.size2=10)  
+  plot(z3)
 })
+

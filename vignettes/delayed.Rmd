@@ -1,0 +1,102 @@
+---
+title: "Delayed: A Framework for Parallelizing Dependent Tasks"
+author: "Jeremy R Coyle"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo=FALSE, results='hide'}
+library(delayed)
+```
+
+R supports a range of options to parallelize computation. For an overview, see The [HPC Task View](https://cran.r-project.org/web/views/HighPerformanceComputing.html) on CRAN for an . In general, these options work extremely well for problems that are _embarassingly parallel_, in that they support things like parallel `lapply` and parallel `for` loops (essentially `map` operations). However, there is no easy way to parallelize _dependent_ tasks in R. 
+
+In contrast, python has the excellent [`dask`](http://dask.pydata.org/en/latest/) framework , which makes it easy to build up a graph of interdependent tasks and then execute them in parallel in an order that optimizes performance. The current package seeks to reproduce a subset of that functionality in R, specifically the [`delayed`](http://dask.pydata.org/en/latest/delayed.html) module. To parallelize across the tasks, we leverage the excellent [`future`](https://github.com/HenrikBengtsson/future/tree/master/R) package.
+
+
+## Example
+
+The two main ways to generate `Delayed` objects in R are via the `delayed` and `delayed_fun` functions. `delayed` delays expressions, while `delayed_fun` wraps a function so that it returns `Delayed` results
+
+```{r, echo=TRUE, results='markup'}
+
+#delay a simple expression
+delayed_object <- delayed(3+4)
+print(delayed_object)
+
+#compute its result
+delayed_object$compute()
+
+#delay a function
+x2 <- function(x){x*x}
+delayed_x2 <- delayed_fun(x2)
+
+#calling it returns a delayed call
+delayed_object <- delayed_x2(4)
+print(delayed_object)
+
+#again, we can compute its result
+delayed_object$compute()
+
+```
+
+All of this is substantially similar to the `future` package. Where things diverge is in the ability to chain `Delayed` objects together. For example:
+
+```{r, echo=TRUE, results='markup'}
+
+#delay a simple expression
+delayed_object <- delayed(3+4)
+
+#and another
+delayed_object2 <- delayed(1+2)
+
+#delay a function
+adder <- function(x,y){x+y}
+delayed_adder <- delayed_fun(adder)
+
+#but now, use one delayed as input to another
+chained_delayed <- delayed_adder(delayed_object, delayed_object2)
+
+#We can still compute its result.
+chained_delayed$compute()
+
+```
+
+We can visualize the dependency structure of these delayed tasks by calling `plot` on the resulting object:
+
+```{r, fig.show='hold'}
+plot(chained_delayed)
+```
+
+## Parallelization
+
+We can easily parallelize across this dependency structure by specifying a `future` `plan`. For example,
+
+```{r}
+library(future)
+plan(multicore, workers=2)
+
+#redefine the delayed object from above
+delayed_object <- delayed(3+4)
+delayed_object2 <- delayed(1+2)
+chained_delayed <- delayed_adder(delayed_object, delayed_object2)
+
+#compute it using two workers, verbose mode lets us see the computation order
+chained_delayed$compute(nworkers=2, verbose=TRUE)
+```
+
+This shows the lifecycle of a delayed task. It starts in with a state of `"waiting"`, which means that it depends on other delayed tasks that are not yet complete. If it has no delayed dependencies, or when these dependencies become resolved, it transitions to a `"ready"` state. This means it will be run as soon as a worker is available to run it. Once it is assigned to a worker, it becomes `"running"`, and when it is complete, it is finally marked `"resolved"`.
+
+
+## Future Work
+
+### Scheduling Tasks
+When multiple tasks are simulatenously `"ready"`, the scheduler must decide which to assign to the next available worker. Currently, the scheduler simply prioritizes tasks that are likely to result in other tasks becoming "ready". In the future, we plan to build more advanced scheduling features, similar to those implemented in dask. An overview of that functionality is described here: https://distributed.readthedocs.io/en/latest/scheduling-policies.html
+
+### Distributed Data
+
+One of the other key features of dask is [_data locality_](https://distributed.readthedocs.io/en/latest/locality.html). That is, data is only on workers that need it for given tasks, and is only shared between workers when necessary. Tasks are then prioritized to workers that have all the necessary components. We have begun to implement a similar framework.

@@ -3,17 +3,21 @@
 \name{delayed}
 \alias{delayed}
 \alias{delayed_fun}
-\title{Generates a delayed version of an expression}
+\title{Generates a Delayed version of an expression}
 \usage{
-delayed(expr)
+delayed(expr, sequential = FALSE)
 
-delayed_fun(fun)
+delayed_fun(fun, sequential = FALSE)
 }
 \arguments{
 \item{expr}{expression to delay}
 
+\item{sequential}{if TRUE, never parallelize this task}
+
 \item{fun}{function to delay}
 }
 \description{
-Generates a delayed version of an expression
+Generates a Delayed version of an expression
+
+Generates a delayed version of a function, that can be then called to generate Delayed objects
 }

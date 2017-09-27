@@ -1,10 +1,10 @@
 library(delayed)
 library(testthat)
-library(rlang)
+library(future)
 context("Delayed")
 
 #this fails because expects an actual expression
-#todo: make delay idempotent for objects
+#todo: make delay just return objects unwrapped
 # test_that("can generate delayed from simple expression",{
 #   d <- delayed(3)
 #   d$resolve()
@@ -17,7 +17,6 @@ test_that("can generate delayed from expression",{
   d$compute()
   expect_equal(d$value,7)
   d2$compute()
-  print(d2$value)
   expect_equal(d2$value,11)
 })
 

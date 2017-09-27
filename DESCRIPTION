@@ -1,6 +1,6 @@
 Package: delayed
 Title: Implementation of Dask Delayed for R
-Version: 0.0.0.9000
+Version: 0.2.0.0000
 Authors@R: person("Jeremy", "Coyle", email = "jeremyrcoyle@gmail.com", role = c("aut", "cre"))
 Description: A poor facsimile of http://http://dask.pydata.org/en/latest/delayed.html.
 Depends: R (>= 3.4.0)
@@ -13,7 +13,12 @@ Imports: R6,
          rstackdeque,
          rlang,
          data.table,
-         assertthat
+         assertthat,
+         visNetwork,
+         uuid,
+         BBmisc
 RoxygenNote: 6.0.1
-Suggests: testthat
-
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
