@@ -3,7 +3,7 @@ Title: Implementation of Dask Delayed for R
 Version: 0.2.0.0000
 Authors@R: person("Jeremy", "Coyle", email = "jeremyrcoyle@gmail.com", role = c("aut", "cre"))
 Description: A poor facsimile of http://http://dask.pydata.org/en/latest/delayed.html.
-Depends: R (>= 3.4.0)
+Depends: R (>= 3.3.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
