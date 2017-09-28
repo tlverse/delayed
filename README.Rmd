@@ -62,12 +62,12 @@ devtools::install_github("jeremyrcoyle/delayed")
 If you encounter any bugs or have any specific feature requests, please [file an
 issue](https://github.com/jeremyrcoyle/delayed/issues).
 
---
+---
 
 ## Example
 
-This minimal example shows how to use `delayed` to handle parallel computations
-with dependencies via chaining of tasks:
+This minimal example shows how to use `delayed` to handle computations with
+dependencies via chaining of tasks:
 
 ```{r delay_fun_chain, message=FALSE}
 library(delayed)
