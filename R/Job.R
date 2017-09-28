@@ -133,3 +133,4 @@ FutureJob <- R6Class(
       .future=NULL
     )
 )
+

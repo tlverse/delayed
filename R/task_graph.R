@@ -54,6 +54,10 @@ make_graph <- function(delayed_object, graph = NULL, level = 1) {
 
 #' Plot Method for Delayed Objects
 #'
+#' @param x An object of class \code{Delayed} for which a task dependency graph
+#' will be generated.
+#' @param ... Additional arugments (currently ignored).
+#'
 #' @importFrom visNetwork visNetwork visEdges visHierarchicalLayout %>%
 #'
 #' @export
@@ -68,8 +72,8 @@ plot.Delayed <- function(x, ...) {
                             c("waiting","ready","running","resolved"))]
   # nodes$level = c(1,4,5,2,3,3)
   edges <- as_data_frame(graph, "edges")
-  visNetwork(nodes, edges, width = "100%") %>% 
-    visEdges(arrows = "to") %>% 
+  visNetwork(nodes, edges, width = "100%") %>%
+    visEdges(arrows = "to") %>%
     visHierarchicalLayout(direction = "RL", levelSeparation = 500)
 }
 

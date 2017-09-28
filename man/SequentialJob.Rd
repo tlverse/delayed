@@ -3,12 +3,13 @@
 \docType{class}
 \name{SequentialJob}
 \alias{SequentialJob}
-\title{A Job that will evaluate immediately}
+\title{Sequential Delayed Jobs}
 \format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{
 SequentialJob
 }
 \description{
-A Job that will evaluate immediately
+A \code{Job} that will evaluate immediately (i.e., in a
+sequential fashion), blocking the current process until it completes.
 }
 \keyword{datasets}
