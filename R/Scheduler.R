@@ -165,6 +165,7 @@ Scheduler <- R6Class(classname = "Scheduler",
                         )
 )
 
+################################################################################
 
 closest_dependent_count <- function(task, waiting_tasks){
   
@@ -177,3 +178,4 @@ closest_dependent_count <- function(task, waiting_tasks){
   dependent_counts <- sapply(dependents, function(dependent) length(dependent$unresolved_dependencies))
   return(min(dependent_counts))
 }
+

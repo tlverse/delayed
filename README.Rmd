@@ -66,13 +66,13 @@ issue](https://github.com/jeremyrcoyle/delayed/issues).
 
 ## Example
 
-This minimal example shows how to use `delayed` to handle computations with
-dependencies via chaining of tasks:
+This minimal example shows how to use `delayed` to handle dependent computations
+via chaining of tasks:
 
 ```{r delay_fun_chain, message=FALSE}
 library(delayed)
 
-# delay a function for addition
+# delay a function that does a bit of math
 mapfun <- function(x, y) {(x + y) / (x - y)}
 delayed_mapfun <- delayed_fun(mapfun)
 
@@ -102,3 +102,4 @@ package](https://github.com/HenrikBengtsson/future).
 
 The contents of this repository are distributed under the GPL-3 license. See
 file `LICENSE` for details.
+

@@ -9,7 +9,7 @@
 #'
 #' @export
 #
-make_graph <- function(delayed_object, graph=NULL, level=1) {
+make_graph <- function(delayed_object, graph = NULL, level = 1) {
   if (is.null(graph)) {
     graph <- make_empty_graph()
   }
@@ -25,7 +25,7 @@ make_graph <- function(delayed_object, graph=NULL, level=1) {
                             sequential = delayed_object$sequential,
                             state = delayed_object$state)
 
-    delayed_dependencies <-  delayed_object$delayed_dependencies
+    delayed_dependencies <- delayed_object$delayed_dependencies
 
     # loop over dependencies
     for (i in seq_along(delayed_dependencies)) {
@@ -49,6 +49,8 @@ make_graph <- function(delayed_object, graph=NULL, level=1) {
   }
   return(graph)
 }
+
+################################################################################
 
 #' Plot Method for Delayed Objects
 #'
