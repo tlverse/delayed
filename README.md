@@ -1,15 +1,20 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-R/`delayed`: A Framework for Parallelizing Dependent Tasks
-==========================================================
+R/`delayed`
+===========
 
 [![Travis-CI Build Status](https://travis-ci.org/jeremyrcoyle/delayed.svg?branch=master)](https://travis-ci.org/jeremyrcoyle/delayed) [![Build status](https://ci.appveyor.com/api/projects/status/wid97j656ga0elme?svg=true)](https://ci.appveyor.com/project/jeremyrcoyle/delayed) [![Coverage Status](https://img.shields.io/codecov/c/github/jeremyrcoyle/delayed/master.svg)](https://codecov.io/github/jeremyrcoyle/delayed?branch=master) [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
-**Authors:** [Jeremy Coyle](https://github.com/jeremyrcoyle)
+> A framework for parallelizing dependent tasks
+
+**Author:** [Jeremy Coyle](https://github.com/jeremyrcoyle)
 
 ------------------------------------------------------------------------
 
-See the [vignette](https://github.com/jeremyrcoyle/delayed/blob/master/vignettes/delayed.Rmd) for more information
+What's `delayed`?
+-----------------
+
+`delayed` is an R package that provides a framework for parallelizing dependent tasks in an efficient manner. It brings to R a subset of the functionality implemented in Python's [Dask library](https://dask.pydata.org/en/latest/). For more information, consider consulting the [package vignette](https://github.com/jeremyrcoyle/delayed/blob/master/vignettes/delayed.Rmd).
 
 ------------------------------------------------------------------------
 
@@ -22,7 +27,7 @@ For standard use, we recommend installing the package from
 
 
 ```r
-install.packages("sl3")
+install.packages("delayed")
 ```
 -->
 Install the most recent *stable release* from GitHub via [`devtools`](https://www.rstudio.com/products/rpackages/devtools/):
@@ -31,21 +36,50 @@ Install the most recent *stable release* from GitHub via [`devtools`](https://ww
 devtools::install_github("jeremyrcoyle/delayed")
 ```
 
-<!--
-To contribute, install the _development version_ from GitHub via
-[`devtools`](https://www.rstudio.com/products/rpackages/devtools/):
+------------------------------------------------------------------------
 
+Issues
+------
 
-```r
-devtools::install_github("jeremyrcoyle/sl3", ref = "develop")
+If you encounter any bugs or have any specific feature requests, please [file an issue](https://github.com/jeremyrcoyle/delayed/issues).
+
+--
+
+Example
+-------
+
+This minimal example shows how to use `delayed` to handle parallel computations with dependencies via chaining of tasks:
+
+``` r
+library(delayed)
+
+# delay a function for addition
+mapfun <- function(x, y) {(x + y) / (x - y)}
+delayed_mapfun <- delayed_fun(mapfun)
+
+set.seed(14765)
+library(future)
+plan(multicore, workers = 2)
+const <- 7
+
+# re-define the delayed object from above
+delayed_norm <- delayed(rnorm(n = const))
+delayed_pois <- delayed(rpois(n = const, lambda = const))
+chained_norm_pois <- delayed_mapfun(delayed_norm, delayed_pois)
+
+# compute it using the future plan (multicore with 2 cores)
+chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
+#> [1] -1.7010419 -1.0240511 -0.9609982 -1.3043426 -1.5002940 -1.1948238
+#> [7] -0.8870281
 ```
--->
+
+*Remark:* In the above, the delayed computation is carried out in parallel using the framework offered by the excellent [`future` package](https://github.com/HenrikBengtsson/future).
 
 ------------------------------------------------------------------------
 
 License
 -------
 
-© 2017 \[Jeremy R. Coyle\](<https://github.com/jeremyrcoyle>
+© 2017 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
 
 The contents of this repository are distributed under the GPL-3 license. See file `LICENSE` for details.

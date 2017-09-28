@@ -1,24 +1,35 @@
 Package: delayed
-Title: Implementation of Dask Delayed for R
-Version: 0.2.0.0000
-Authors@R: person("Jeremy", "Coyle", email = "jeremyrcoyle@gmail.com", role = c("aut", "cre"))
-Description: A poor facsimile of http://http://dask.pydata.org/en/latest/delayed.html.
-Depends: R (>= 3.3.0)
-License: GPL-3
-Encoding: UTF-8
-LazyData: true
-Imports: R6,
-         igraph,
-         future,
-         rstackdeque,
-         rlang,
-         data.table,
-         assertthat,
-         visNetwork,
-         uuid,
-         BBmisc
-RoxygenNote: 6.0.1
-Suggests: testthat,
+Title: A Framework for Parallelizing Dependent Tasks
+Version: 0.2.1
+Authors@R: c(
+    person("Jeremy", "Coyle", email = "jeremyrcoyle@gmail.com",
+           role = c("aut", "cre", "cph")),
+    person("Nima", "Hejazi", email = "nh@nimahejazi.org", role = "ctb"))
+Description: This package provides mechanisms to parallelize dependent tasks in
+    a manner that optimizes the compute resources available. It provides access
+    to "delayed" computations, which may be parallelized using futures. It is,
+    to an extent, a facsimile of the Dask library, for the Python language.
+Depends:
+    R (>= 3.3.0)
+Imports:
+    R6,
+    igraph,
+    future,
+    rstackdeque,
+    rlang,
+    data.table,
+    assertthat,
+    visNetwork,
+    uuid,
+    BBmisc
+Suggests:
+    testthat,
     knitr,
     rmarkdown
+License: GPL-3
+URL: https://github.com/jeremyrcoyle/delayed
+BugReports: https://github.com/jeremyrcoyle/delayed/issues
+Encoding: UTF-8
+LazyData: true
 VignetteBuilder: knitr
+RoxygenNote: 6.0.1
