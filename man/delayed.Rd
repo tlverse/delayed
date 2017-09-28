@@ -3,7 +3,7 @@
 \name{delayed}
 \alias{delayed}
 \alias{delayed_fun}
-\title{Generates a Delayed version of an expression}
+\title{Generates Delayed Version of an Expression}
 \usage{
 delayed(expr, sequential = FALSE)
 
@@ -17,7 +17,8 @@ delayed_fun(fun, sequential = FALSE)
 \item{fun}{function to delay}
 }
 \description{
-Generates a Delayed version of an expression
+Generates Delayed Version of an Expression
 
-Generates a delayed version of a function, that can be then called to generate Delayed objects
+A Delayed version of a function may be called to generate
+Delayed objects
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/task_graph.R
 \name{make_graph}
 \alias{make_graph}
-\title{Function to make graphical representation of a task dependency structure}
+\title{Graphical Representation of a Task Dependency Structure}
 \usage{
 make_graph(delayed_object, graph = NULL, level = 1)
 }
@@ -14,5 +14,5 @@ make_graph(delayed_object, graph = NULL, level = 1)
 \item{level}{the level of the node to be graphed, usually NULL}
 }
 \description{
-Function to make graphical representation of a task dependency structure
+Graphical Representation of a Task Dependency Structure
 }

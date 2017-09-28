@@ -15,7 +15,6 @@
 ^vignettes/[^/]*_cache
 
 # other miscellaneous non-CRAN files
-xgboost.model
 ^docs$
 ^README\.Rmd$
 ^README\.html$
@@ -25,3 +24,4 @@ xgboost.model
 ^refs.bib$
 ^Makefile$
 ^LICENSE$
+
