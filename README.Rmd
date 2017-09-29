@@ -31,9 +31,11 @@ __Author:__ [Jeremy Coyle](https://github.com/jeremyrcoyle)
 `delayed` is an R package that provides a framework for parallelizing dependent
 tasks in an efficient manner. It brings to R a subset of the
 functionality implemented in Python's [Dask
-library](https://dask.pydata.org/en/latest/). For more information, consider
-consulting the [package
-vignette](https://github.com/jeremyrcoyle/delayed/blob/master/vignettes/delayed.Rmd).
+library](https://dask.pydata.org/en/latest/). For details on how best to use
+`delayed`, please consult the package
+[documentation](https://nhejazi.github.io/delayed/) and
+[vignette](https://nhejazi.github.io/delayed/articles/delayed.html)
+online, or do so from within [R](https://www.r-project.org/).
 
 ---
 
