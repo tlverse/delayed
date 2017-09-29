@@ -52,6 +52,8 @@ This minimal example shows how to use `delayed` to handle dependent computations
 
 ``` r
 library(delayed)
+#> delayed: Framework for Parallelizing Dependent Tasks
+#> Version: 0.2.1
 
 # delay a function that does a bit of math
 mapfun <- function(x, y) {(x + y) / (x - y)}
@@ -69,8 +71,20 @@ chained_norm_pois <- delayed_mapfun(delayed_norm, delayed_pois)
 
 # compute it using the future plan (multicore with 2 cores)
 chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
-#> [1] -0.8705363 -1.0236498 -0.5951642 -1.0116457 -0.9858493 -0.7957543
-#> [7] -0.8568069
+#> run:0 ready:2 workers:2
+#> updating rpois(n = const, lambda = const) from ready to running
+#> run:1 ready:1 workers:2
+#> updating rnorm(n = const) from ready to running
+#> run:2 ready:0 workers:2
+#> updating rnorm(n = const) from running to resolved
+#> updating rpois(n = const, lambda = const) from running to resolved
+#> updating mapfun(x = delayed_norm, y = delayed_pois) from waiting to ready
+#> run:0 ready:1 workers:2
+#> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
+#> run:1 ready:0 workers:2
+#> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
+#> [1] -0.8580934 -0.5487926 -2.2290142 -1.0234833 -1.4300754 -0.8045187
+#> [7] -1.0919853
 ```
 
 *Remark:* In the above, the delayed computation is carried out in parallel using the framework offered by the excellent [`future` package](https://github.com/HenrikBengtsson/future).

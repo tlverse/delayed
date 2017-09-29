@@ -71,7 +71,7 @@ issue](https://github.com/jeremyrcoyle/delayed/issues).
 This minimal example shows how to use `delayed` to handle dependent computations
 via chaining of tasks:
 
-```{r delay_fun_chain, message=FALSE}
+```{r delay_fun_chain}
 library(delayed)
 
 # delay a function that does a bit of math

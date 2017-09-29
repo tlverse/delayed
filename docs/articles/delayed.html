@@ -66,7 +66,7 @@
 <code>delayed</code>: A Framework for Parallelizing Dependent Tasks</h1>
                         <h4 class="author">Jeremy R. Coyle</h4>
             
-            <h4 class="date">2017-09-28</h4>
+            <h4 class="date">2017-09-29</h4>
           </div>
 
     
@@ -121,8 +121,8 @@ chained_delayed_<span class="dv">10</span><span class="op">$</span><span class="
 <pre><code>## [1] 10</code></pre>
 <p>We can visualize the dependency structure of these delayed tasks by calling <code>plot</code> on the resultant <code>Delayed</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(chained_delayed_<span class="dv">10</span>)</code></pre></div>
-<div id="htmlwidget-245a0aa67c2807dda60b" style="width:100%;height:480px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-245a0aa67c2807dda60b">{"x":{"nodes":{"id":["0x7fa74bd4f508","0x7fa74b4cd4b0","0x7fa74b557948"],"label":["adder(x = delayed_object_7, y = delayed_object_3)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"color":["green","green","green"]},"edges":{"from":["0x7fa74b4cd4b0","0x7fa74b557948"],"to":["0x7fa74bd4f508","0x7fa74bd4f508"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"direction":"RL"}}},"groups":null,"width":"100%","height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null},"evals":[],"jsHooks":[]}</script><hr>
+<div id="htmlwidget-38d8fbfee01b4e242ab8" style="width:100%;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-38d8fbfee01b4e242ab8">{"x":{"nodes":{"id":["0x7ff570236e98","0x7ff56eff0d08","0x7ff56f955788"],"label":["adder(x = delayed_object_7, y = delayed_object_3)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"color":["green","green","green"]},"edges":{"from":["0x7ff56eff0d08","0x7ff56f955788"],"to":["0x7ff570236e98","0x7ff570236e98"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"direction":"RL"}}},"groups":null,"width":"100%","height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null},"evals":[],"jsHooks":[]}</script><hr>
 </div>
 <div id="parallelization" class="section level2">
 <h2 class="hasAnchor">
@@ -140,9 +140,9 @@ chained_delayed_<span class="dv">10</span> &lt;-<span class="st"> </span><span c
 <span class="co"># see the computation order</span>
 chained_delayed_<span class="dv">10</span><span class="op">$</span><span class="kw">compute</span>(<span class="dt">nworkers =</span> <span class="dv">2</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## run:0 ready:2 workers:2</code></pre>
-<pre><code>## updating 3 + 4 from ready to running</code></pre>
-<pre><code>## run:1 ready:1 workers:2</code></pre>
 <pre><code>## updating 1 + 2 from ready to running</code></pre>
+<pre><code>## run:1 ready:1 workers:2</code></pre>
+<pre><code>## updating 3 + 4 from ready to running</code></pre>
 <pre><code>## run:2 ready:0 workers:2</code></pre>
 <pre><code>## updating 3 + 4 from running to resolved</code></pre>
 <pre><code>## updating 1 + 2 from running to resolved</code></pre>

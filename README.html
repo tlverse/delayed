@@ -55,6 +55,8 @@ install.packages("delayed")
 <h2 id="example">Example</h2>
 <p>This minimal example shows how to use <code>delayed</code> to handle dependent computations via chaining of tasks:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(delayed)
+<span class="co">#&gt; delayed: Framework for Parallelizing Dependent Tasks</span>
+<span class="co">#&gt; Version: 0.2.1</span>
 
 <span class="co"># delay a function that does a bit of math</span>
 mapfun &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {(x <span class="op">+</span><span class="st"> </span>y) <span class="op">/</span><span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>y)}
@@ -72,8 +74,20 @@ chained_norm_pois &lt;-<span class="st"> </span><span class="kw">delayed_mapfun<
 
 <span class="co"># compute it using the future plan (multicore with 2 cores)</span>
 chained_norm_pois<span class="op">$</span><span class="kw">compute</span>(<span class="dt">nworkers =</span> <span class="dv">2</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; [1] -1.0305093 -1.3479497 -1.3727018 -1.1365808 -1.7625870 -0.9630309</span>
-<span class="co">#&gt; [7] -1.1275982</span></code></pre></div>
+<span class="co">#&gt; run:0 ready:2 workers:2</span>
+<span class="co">#&gt; updating rpois(n = const, lambda = const) from ready to running</span>
+<span class="co">#&gt; run:1 ready:1 workers:2</span>
+<span class="co">#&gt; updating rnorm(n = const) from ready to running</span>
+<span class="co">#&gt; run:2 ready:0 workers:2</span>
+<span class="co">#&gt; updating rnorm(n = const) from running to resolved</span>
+<span class="co">#&gt; updating rpois(n = const, lambda = const) from running to resolved</span>
+<span class="co">#&gt; updating mapfun(x = delayed_norm, y = delayed_pois) from waiting to ready</span>
+<span class="co">#&gt; run:0 ready:1 workers:2</span>
+<span class="co">#&gt; updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running</span>
+<span class="co">#&gt; run:1 ready:0 workers:2</span>
+<span class="co">#&gt; updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved</span>
+<span class="co">#&gt; [1] -0.8531541 -0.9015424 -1.9414765 -0.8257675 -0.9920517 -0.9157631</span>
+<span class="co">#&gt; [7] -1.2153834</span></code></pre></div>
 <p><em>Remark:</em> In the above, the delayed computation is carried out in parallel using the framework offered by the excellent <a href="https://github.com/HenrikBengtsson/future"><code>future</code> package</a>.</p>
 <hr />
 <h2 id="license">License</h2>
