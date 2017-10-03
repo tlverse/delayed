@@ -63,8 +63,8 @@ SequentialJob <- R6Class(
     public = list(
       initialize = function(delayed_object) {
         to_eval <- delayed_object$prepare_eval()
-        private$.result <- rlang::eval_bare(expr = to_eval$expr,
-                                            env = to_eval$env)
+        private$.result <- try({rlang::eval_bare(expr = to_eval$expr,
+                                     env = to_eval$env)})
         super$initialize(delayed_object)
       }
     ),
@@ -123,7 +123,7 @@ FutureJob <- R6Class(
       },
       value = function() {
         if (is.null(private$.result)) {
-          private$.result <- value(private$.future)
+          private$.result <- value(private$.future, signal = FALSE)
         }
         return(private$.result)
       }
@@ -133,4 +133,3 @@ FutureJob <- R6Class(
       .future=NULL
     )
 )
-
