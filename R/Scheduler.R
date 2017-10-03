@@ -19,7 +19,8 @@ Scheduler <- R6Class(
         private$.task_lists <- list(waiting = env(),
                                     ready = env(),
                                     running = env(),
-                                    resolved = env()
+                                    resolved = env(),
+                                    error = env()
                                   )
 
         self$enumerate_tasks(delayed_object)
@@ -121,6 +122,14 @@ Scheduler <- R6Class(
               newly_completed <- mget(unlist(completed),
                                       private$.task_lists[["resolved"]])
               lapply(newly_completed, `[[`,"value") # force value collection
+              # check for errors (currently detected on Delayed$value)
+              new_states <- sapply(newly_completed,`[[`,"state") # force value collection
+              if(any(new_states=="error")){
+                errored_tasks <- newly_completed[which(new_states=="error")]
+                first_error <- errored_tasks[[1]]
+                message(sprintf("Failed on %s",first_error$name))
+                stop(first_error$value)
+              }
               all_dependents <- unique(unlist(lapply(newly_completed,
                                        `[[`,"dependents")))
 
@@ -135,22 +144,6 @@ Scheduler <- R6Class(
     active = list(
       name = function() {
         return(private$.name)
-      },
-
-      waiting_tasks = function() {
-        return(private$.waiting_tasks)
-      },
-
-      ready_tasks = function() {
-        return(private$.ready_tasks)
-      },
-
-      running_tasks = function() {
-        return(private$.running_tasks)
-      },
-
-      resolved_tasks = function() {
-        return(private$.resolved_tasks)
       },
 
       task_lists = function() {
@@ -180,6 +173,7 @@ Scheduler <- R6Class(
       .verbose = FALSE,
       .task_lists = list()
     )
+
 )
 
 ################################################################################

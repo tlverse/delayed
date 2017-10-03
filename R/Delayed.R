@@ -163,7 +163,12 @@ Delayed <- R6Class(
     },
 
     value = function() {
-      return(private$.job$value)
+      result <- private$.job$value
+      
+      if(inherits(result,"error")||inherits(result,"try-error")){
+        private$.state <- "error"
+      }
+      return(result)
     },
 
     state = function() {
@@ -212,6 +217,7 @@ Delayed <- R6Class(
                  .sequential = FALSE,
                  .state = "waiting",
                  .dependents = c()
+
                 )
 )
 
