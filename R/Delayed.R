@@ -240,14 +240,15 @@ Delayed <- R6Class(
 #'
 #' @param expr expression to delay
 #' @param sequential if TRUE, never parallelize this task
+#' @param expect_error if TRUE, pass error to downstream tasks instead of halting computation
 #'
 #' @rdname delayed
 #'
 #' @export
 #
-delayed <- function(expr, sequential = FALSE) {
+delayed <- function(expr, sequential = FALSE, expect_error = FALSE) {
   qexpr <- enquo(expr)
-  Delayed$new(qexpr, sequential = sequential)
+  Delayed$new(qexpr, sequential = sequential, expect_error = expect_error)
 }
 
 ################################################################################
@@ -263,7 +264,7 @@ delayed <- function(expr, sequential = FALSE) {
 #'
 #' @export
 #
-delayed_fun <- function(fun, sequential = FALSE) {
+delayed_fun <- function(fun, sequential = FALSE, expect_error = FALSE) {
   fun_name <- as.character(match.call()[[2]])
   delayed_f = function(...) {
     call <- match.call(fun,sys.call())
@@ -273,7 +274,7 @@ delayed_fun <- function(fun, sequential = FALSE) {
     env <- new.env(parent=caller_env())
     assign(fun_name,fun, envir=env)
     pq <- as_quosure(call, env)
-    Delayed$new(pq, sequential=sequential)
+    Delayed$new(pq, sequential=sequential, expect_error = expect_error)
   }
 }
 
