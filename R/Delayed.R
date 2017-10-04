@@ -17,7 +17,7 @@ Delayed <- R6Class(
     public = list(
       initialize = function(qexpr,
                             name = NULL,
-                            sequential = FALSE) {
+                            sequential = FALSE, expect_error = FALSE) {
         private$.qexpr <- qexpr
 
         if (is.null(name)) {
@@ -27,7 +27,7 @@ Delayed <- R6Class(
         }
 
         private$.sequential = sequential
-
+        private$.expect_error = expect_error
         # TODO: this will break for nested expressions and also non-expressions
         private$.dependencies <- lapply(lang_tail(UQ(qexpr)),
                                         eval_bare,
@@ -164,10 +164,14 @@ Delayed <- R6Class(
 
     value = function() {
       result <- private$.job$value
-      
-      if(inherits(result,"error")||inherits(result,"try-error")){
-        private$.state <- "error"
+      if(!private$.expect_error){
+        # if we're not expecting this Delayed to return an error
+        # check for errors and mark state as "error" if found
+        if(inherits(result,"error")||inherits(result,"try-error")){
+          private$.state <- "error"
+        }
       }
+        
       return(result)
     },
 
@@ -203,7 +207,15 @@ Delayed <- R6Class(
         private$.sequential = force
       }
       return(private$.sequential)
+    },
+    
+    expect_error = function(force) {
+      if (!missing(force)) {
+        private$.expect_error = force
+      }
+      return(private$.expect_error)
     }
+    
   ),
 
   private = list(.name = NULL,
@@ -215,6 +227,7 @@ Delayed <- R6Class(
                  .job = NULL,
                  .uuid = NULL,
                  .sequential = FALSE,
+                 .expect_error = FALSE,
                  .state = "waiting",
                  .dependents = c()
 
