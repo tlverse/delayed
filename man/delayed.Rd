@@ -5,14 +5,16 @@
 \alias{delayed_fun}
 \title{Generates Delayed Version of an Expression}
 \usage{
-delayed(expr, sequential = FALSE)
+delayed(expr, sequential = FALSE, expect_error = FALSE)
 
-delayed_fun(fun, sequential = FALSE)
+delayed_fun(fun, sequential = FALSE, expect_error = FALSE)
 }
 \arguments{
 \item{expr}{expression to delay}
 
 \item{sequential}{if TRUE, never parallelize this task}
+
+\item{expect_error}{if TRUE, pass error to downstream tasks instead of halting computation}
 
 \item{fun}{function to delay}
 }
