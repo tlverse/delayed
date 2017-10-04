@@ -70,10 +70,6 @@ plot.Delayed <- function(x, ...) {
   colors <- c("black","orange","green","blue","red")
   states <- c("waiting","ready","running","resolved","error")
   nodes$color <- colors[match(nodes$state, states)]
-  nodes <- as_data_frame(graph,"vertices")
-  nodes <- data.frame(id = nodes$name, label=nodes$label, level = nodes$level, sequential = nodes$sequential, state = nodes$state)
-
-  # nodes$level = c(1,4,5,2,3,3)
   edges <- as_data_frame(graph, "edges")
   visNetwork(nodes, edges, width = "100%") %>%
     visEdges(arrows = "to") %>%
