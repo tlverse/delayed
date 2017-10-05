@@ -87,56 +87,74 @@ Scheduler <- R6Class(
 
         return(changed_uuids)
       },
-
-      compute = function() {
-        while (!private$.delayed_object$resolved) {
-          nrunning <- length(ls(private$.task_lists[['running']]))
-          nready <- length(ls(private$.task_lists[['ready']]))
-
-          if (private$.verbose) {
-            message(sprintf("run:%d ready:%d workers:%d",
-                            nrunning, nready, private$.nworkers))
-          }
-
-          if ((nready > 0) && (nrunning<private$.nworkers)) {
-            # get a ready task and assign it to a worker
-            current_task <- self$next_ready_task
-
-            if (!is.null(current_task)) {
-              job_type <- private$.job_type
-
-              if (current_task$sequential) {
-                SequentialJob$new(current_task)
-                self$update_task(current_task, "ready", "running")
-              } else {
-                job <- job_type$new(current_task)
-                self$update_task(current_task, "ready", "running")
-              }
+      compute_step = function(){
+        updated_tasks <- c()
+        nrunning <- length(ls(private$.task_lists[['running']]))
+        nready <- length(ls(private$.task_lists[['ready']]))
+        
+        if (private$.verbose) {
+          message(sprintf("run:%d ready:%d workers:%d",
+                          nrunning, nready, private$.nworkers))
+        }
+        
+        if ((nready > 0) && (nrunning<private$.nworkers)) {
+          # get a ready task and assign it to a worker
+          current_task <- self$next_ready_task
+          
+          if (!is.null(current_task)) {
+            job_type <- private$.job_type
+            
+            if (current_task$sequential) {
+              SequentialJob$new(current_task)
+              self$update_task(current_task, "ready", "running")
+            } else {
+              job <- job_type$new(current_task)
+              self$update_task(current_task, "ready", "running")
             }
-          } else {
-            # check for newly completed tasks
-            completed <- self$update_tasks("running")
-            # completed <- 1
-            # if any tasks completed, update ready tasks
-            if (length(completed) > 0) {
-              newly_completed <- mget(unlist(completed),
-                                      private$.task_lists[["resolved"]])
-              lapply(newly_completed, `[[`,"value") # force value collection
-              # check for errors (currently detected on Delayed$value)
-              new_states <- sapply(newly_completed,`[[`,"state") # force value collection
-              if(any(new_states=="error")){
-                errored_tasks <- newly_completed[which(new_states=="error")]
-                first_error <- errored_tasks[[1]]
-                message(sprintf("Failed on %s",first_error$name))
-                stop(first_error$value)
-              }
-              all_dependents <- unique(unlist(lapply(newly_completed,
-                                       `[[`,"dependents")))
-
-              ready <- self$update_tasks("waiting", all_dependents)
+            
+            updated_tasks <- c(current_task)
+          }
+        } else {
+          # check for newly completed tasks
+          completed <- self$update_tasks("running")
+          # completed <- 1
+          # if any tasks completed, update ready tasks
+          if (length(completed) > 0) {
+            newly_completed <- mget(unlist(completed),
+                                    private$.task_lists[["resolved"]])
+            updated_tasks <- c(updated_tasks, newly_completed)
+            lapply(newly_completed, `[[`,"value") # force value collection
+            # check for errors (currently detected on Delayed$value)
+            new_states <- sapply(newly_completed,`[[`,"state") # force value collection
+            if(any(new_states=="error")){
+              errored_tasks <- newly_completed[which(new_states=="error")]
+              first_error <- errored_tasks[[1]]
+              message(sprintf("Failed on %s",first_error$name))
+              stop(first_error$value)
+            }
+            all_dependents <- unique(unlist(lapply(newly_completed,
+                                                   `[[`,"dependents")))
+            
+            ready <- self$update_tasks("waiting", all_dependents)
+            if(length(ready)>0){
+              newly_ready <- mget(unlist(ready),
+                                  private$.task_lists[["ready"]])
+              updated_tasks <- c(updated_tasks, newly_ready)
             }
           }
         }
+        
+        return(updated_tasks)
+      },
+      compute = function() {
+        while (!private$.delayed_object$resolved) {
+          updated_tasks <- self$compute_step()
+          if(length(updated_tasks)==0){
+            # nothing was updated, so lets wait a bit before we check again
+            Sys.sleep(0.1)
+          }
+        }
+        
         return(private$.delayed_object$value)
       }
     ),
@@ -160,6 +178,9 @@ Scheduler <- R6Class(
         } else {
           return(NULL)
         }
+      },
+      delayed_object = function(){
+        return(private$.delayed_object)
       }
     ),
 
