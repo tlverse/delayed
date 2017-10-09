@@ -10,7 +10,7 @@ Description: This package provides mechanisms to parallelize dependent tasks in
     to "delayed" computations, which may be parallelized using futures. It is,
     to an extent, a facsimile of the Dask library, for the Python language.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.2.0)
 Imports:
     R6,
     igraph,
