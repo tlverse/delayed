@@ -10,7 +10,7 @@ plot_delayed_shiny <- function(scheduler){
   delayed_object <- scheduler$delayed_object
   
   server <- function(input, output, session) {
-    network <- plot.Delayed(delayed_object)
+    network <- plot.Delayed(delayed_object, height="100%", width="100%")
 
     running <- FALSE
     output$network <- renderVisNetwork({
@@ -51,7 +51,7 @@ plot_delayed_shiny <- function(scheduler){
   
   ui <- shiny::fluidPage(
     shiny::actionButton("start", "Click to start/pause computation"),
-    visNetworkOutput("network")
+    visNetworkOutput("network", height="800px")
   )
   
   app <- shiny::shinyApp(ui = ui, server = server)
