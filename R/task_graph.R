@@ -55,7 +55,10 @@ make_graph <- function(delayed_object, graph = NULL, level = 1) {
 #'
 #' @param x An object of class \code{Delayed} for which a task dependency graph
 #' will be generated.
-#' @param ... Additional arugments (currently ignored).
+#' @param color If true, color-code nodes according to status, and display legend
+#' @param height passed to visNetwork
+#' @param width passed to visNetwork
+#' @param ... Additional arugments (passed to visNetwork).
 #'
 #' @importFrom visNetwork visNetwork visEdges visHierarchicalLayout visLegend visGroups %>%
 #' 

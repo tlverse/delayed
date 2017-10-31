@@ -4,13 +4,20 @@
 \alias{plot.Delayed}
 \title{Plot Method for Delayed Objects}
 \usage{
-\method{plot}{Delayed}(x, ...)
+\method{plot}{Delayed}(x, color = TRUE, height = "500px", width = "100\%",
+  ...)
 }
 \arguments{
 \item{x}{An object of class \code{Delayed} for which a task dependency graph
 will be generated.}
 
-\item{...}{Additional arugments (currently ignored).}
+\item{color}{If true, color-code nodes according to status, and display legend}
+
+\item{height}{passed to visNetwork}
+
+\item{width}{passed to visNetwork}
+
+\item{...}{Additional arugments (passed to visNetwork).}
 }
 \description{
 Plot Method for Delayed Objects
