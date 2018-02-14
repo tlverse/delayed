@@ -21,7 +21,7 @@ Delayed <- R6Class(
         private$.qexpr <- qexpr
 
         if (is.null(name)) {
-          private$.name <- paste(deparse(UQE(qexpr)), collapse = "")
+          private$.name <- paste(deparse(get_expr(qexpr)), collapse = "")
         } else {
           private$.name <- name
         }
@@ -29,7 +29,7 @@ Delayed <- R6Class(
         private$.sequential = sequential
         private$.expect_error = expect_error
         # TODO: this will break for nested expressions and also non-expressions
-        private$.dependencies <- lapply(lang_tail(UQ(qexpr)),
+        private$.dependencies <- lapply(lang_tail(qexpr),
                                         eval_bare,
                                         env = f_env(qexpr))
 
@@ -66,7 +66,7 @@ Delayed <- R6Class(
         }
 
         args  <- lapply(self$dependencies, undelay)
-        expr = UQE(self$expression)
+        expr = get_expr(self$expression)
 
         # this seems really dangerous
         mut_node_cdr(expr, as.pairlist(args))
