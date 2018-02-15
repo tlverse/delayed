@@ -2,6 +2,7 @@
 #' @docType class
 #' @importFrom R6 R6Class
 #' @importFrom rstackdeque rstack
+#' @importFrom future plan
 #' @export
 Scheduler <- R6Class(
     classname = "Scheduler",
@@ -28,7 +29,10 @@ Scheduler <- R6Class(
 
         if (is.null(nworkers)) {
           if (job_type$classname == "FutureJob") {
-            nworkers = future::availableCores()
+            nworkers <- formals(plan("next"))$workers
+            if(is.null(nworkers)){
+              nworkers <- 1
+            }
           } else {
             nworkers = 1
           }

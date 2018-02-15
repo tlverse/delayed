@@ -15,7 +15,7 @@ make_graph <- function(delayed_object, graph = NULL, level = 1) {
   }
   
   uuid <- delayed_object$uuid
-  arg_text <- as.character(lang_tail(UQ(delayed_object$expression)))
+  arg_text <- as.character(lang_tail(delayed_object$expression))
   node_name <- delayed_object$name
   if (!(uuid%in%names(V(graph)))) {
     graph <- graph + vertex(name = uuid,
