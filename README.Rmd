@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 
 # R/`delayed`
 
-[![Travis-CI Build Status](https://travis-ci.org/jeremyrcoyle/delayed.svg?branch=master)](https://travis-ci.org/jeremyrcoyle/delayed)
-[![Build status](https://ci.appveyor.com/api/projects/status/wid97j656ga0elme?svg=true)](https://ci.appveyor.com/project/jeremyrcoyle/delayed)
-[![Coverage Status](https://img.shields.io/codecov/c/github/jeremyrcoyle/delayed/master.svg)](https://codecov.io/github/jeremyrcoyle/delayed?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/tlverse/delayed.svg?branch=master)](https://travis-ci.org/tlverse/delayed)
+[![Build status](https://ci.appveyor.com/api/projects/status/wid97j656ga0elme?svg=true)](https://ci.appveyor.com/project/tlverse/delayed)
+[![Coverage Status](https://img.shields.io/codecov/c/github/tlverse/delayed/master.svg)](https://codecov.io/github/tlverse/delayed?branch=master)
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
@@ -54,7 +54,7 @@ Install the most recent _stable release_ from GitHub via
 [`devtools`](https://www.rstudio.com/products/rpackages/devtools/):
 
 ```{r gh-master-installation, eval = FALSE}
-devtools::install_github("jeremyrcoyle/delayed")
+devtools::install_github("tlverse/delayed")
 ```
 
 ---
@@ -62,7 +62,7 @@ devtools::install_github("jeremyrcoyle/delayed")
 ## Issues
 
 If you encounter any bugs or have any specific feature requests, please [file an
-issue](https://github.com/jeremyrcoyle/delayed/issues).
+issue](https://github.com/tlverse/delayed/issues).
 
 ---
 
@@ -100,7 +100,7 @@ package](https://github.com/HenrikBengtsson/future).
 
 ## License
 
-&copy; 2017 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
+&copy; 2017-2019 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
 
 The contents of this repository are distributed under the GPL-3 license. See
 file `LICENSE` for details.
