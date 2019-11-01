@@ -19,8 +19,6 @@ delayed_fun(fun, sequential = FALSE, expect_error = FALSE)
 \item{fun}{function to delay}
 }
 \description{
-Generates Delayed Version of an Expression
-
 A Delayed version of a function may be called to generate
 Delayed objects
 }

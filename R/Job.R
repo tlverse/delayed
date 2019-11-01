@@ -13,32 +13,32 @@
 #' @export
 #
 Job <- R6Class(
-    classname = "Job",
-    cloneable = FALSE,
-    portable = TRUE,
-    class = TRUE,
-    public = list(
-      initialize = function(delayed_object) {
-        private$.delayed_object = delayed_object
-        delayed_object$register_job(self)
-        invisible(self)
-      }
-    ),
+  classname = "Job",
+  cloneable = FALSE,
+  portable = TRUE,
+  class = TRUE,
+  public = list(
+    initialize = function(delayed_object) {
+      private$.delayed_object <- delayed_object
+      delayed_object$register_job(self)
+      invisible(self)
+    }
+  ),
 
-    active = list(
-      finished = function() {
-        return(FALSE)
-      },
+  active = list(
+    finished = function() {
+      return(FALSE)
+    },
 
-      value = function() {
-        return(private$.result)
-      }
-    ),
+    value = function() {
+      return(private$.result)
+    }
+  ),
 
-    private = list(
-      .delayed_object=NULL,
-      .result = NULL
-    )
+  private = list(
+    .delayed_object = NULL,
+    .result = NULL
+  )
 )
 
 ################################################################################
@@ -55,33 +55,37 @@ Job <- R6Class(
 #' @export
 #
 SequentialJob <- R6Class(
-    classname = "SequentialJob",
-    cloneable = FALSE,
-    portable = TRUE,
-    class = TRUE,
-    inherit = Job,
-    public = list(
-      initialize = function(delayed_object) {
-        to_eval <- delayed_object$prepare_eval()
-        private$.result <- try({rlang::eval_bare(expr = to_eval$expr,
-                                     env = to_eval$env)})
-        super$initialize(delayed_object)
-      }
-    ),
+  classname = "SequentialJob",
+  cloneable = FALSE,
+  portable = TRUE,
+  class = TRUE,
+  inherit = Job,
+  public = list(
+    initialize = function(delayed_object) {
+      to_eval <- delayed_object$prepare_eval()
+      private$.result <- try({
+        rlang::eval_bare(
+          expr = to_eval$expr,
+          env = to_eval$env
+        )
+      })
+      super$initialize(delayed_object)
+    }
+  ),
 
-    active = list(
-      finished = function() {
-        return(TRUE)
-      },
-      value = function() {
-        return(private$.result)
-      }
-    ),
+  active = list(
+    finished = function() {
+      return(TRUE)
+    },
+    value = function() {
+      return(private$.result)
+    }
+  ),
 
-    private = list(
-      .worker = NULL,
-      .result_uuid = NULL
-    )
+  private = list(
+    .worker = NULL,
+    .result_uuid = NULL
+  )
 )
 
 ################################################################################
@@ -99,37 +103,38 @@ SequentialJob <- R6Class(
 #' @export
 #
 FutureJob <- R6Class(
-    classname = "FutureJob",
-    cloneable = FALSE,
-    portable = TRUE,
-    class = TRUE,
-    inherit = Job,
-    public = list(
-      initialize = function(delayed_object) {
-        to_eval <- delayed_object$prepare_eval()
-        private$.future <- future(expr = to_eval$expr,
-                                  env = to_eval$env,
-                                  substitute = FALSE,
-                                  globals = as.list(to_eval$env),
-                                  packages = NULL
-                                 )
-        super$initialize(delayed_object)
-      }
-    ),
+  classname = "FutureJob",
+  cloneable = FALSE,
+  portable = TRUE,
+  class = TRUE,
+  inherit = Job,
+  public = list(
+    initialize = function(delayed_object) {
+      to_eval <- delayed_object$prepare_eval()
+      private$.future <- future(
+        expr = to_eval$expr,
+        env = to_eval$env,
+        substitute = FALSE,
+        globals = as.list(to_eval$env),
+        packages = NULL
+      )
+      super$initialize(delayed_object)
+    }
+  ),
 
-    active = list(
-      finished = function() {
-        return(resolved(private$.future))
-      },
-      value = function() {
-        if (is.null(private$.result)) {
-          private$.result <- value(private$.future, signal = FALSE)
-        }
-        return(private$.result)
+  active = list(
+    finished = function() {
+      return(resolved(private$.future))
+    },
+    value = function() {
+      if (is.null(private$.result)) {
+        private$.result <- value(private$.future, signal = FALSE)
       }
-    ),
+      return(private$.result)
+    }
+  ),
 
-    private = list(
-      .future=NULL
-    )
+  private = list(
+    .future = NULL
+  )
 )

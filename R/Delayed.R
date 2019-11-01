@@ -10,127 +10,133 @@
 #' @export
 #
 Delayed <- R6Class(
-    classname = "Delayed",
-    cloneable = FALSE,
-    portable = TRUE,
-    class = TRUE,
-    public = list(
-      initialize = function(qexpr,
-                            name = NULL,
-                            sequential = FALSE, expect_error = FALSE) {
-        private$.qexpr <- qexpr
+  classname = "Delayed",
+  cloneable = FALSE,
+  portable = TRUE,
+  class = TRUE,
+  public = list(
+    initialize = function(qexpr,
+                          name = NULL,
+                          sequential = FALSE, expect_error = FALSE) {
+      private$.qexpr <- qexpr
 
-        if (is.null(name)) {
-          private$.name <- paste(deparse(get_expr(qexpr)), collapse = "")
-        } else {
-          private$.name <- name
-        }
-
-        private$.sequential = sequential
-        private$.expect_error = expect_error
-        # TODO: this will break for nested expressions and also non-expressions
-        private$.dependencies <- lapply(lang_tail(qexpr),
-                                        eval_bare,
-                                        env = f_env(qexpr))
-
-        private$.delayed_dependencies <- which(sapply(private$.dependencies,
-                                                      inherits,
-                                                      "Delayed"))
-        private$.unresolved_dependencies <- private$.delayed_dependencies
-
-        private$.uuid <- UUIDgenerate(use.time = TRUE)
-
-        self$update_state
-
-        invisible(self)
-      },
-
-      print = function() {
-        print(sprintf("delayed(%s)", private$.name))
-      },
-
-      prepare_eval = function() {
-        if (!self$ready) {
-          stop("Task has unresolved dependencies: ",
-               names(self$unresolved_dependencies))
-        }
-
-        undelay <- function(x) {
-          if (inherits(x,"Delayed")) {
-            return(x$value)
-          } else if (inherits(x, "DistributedData")) {
-            return(x$data)
-          } else {
-            return(x)
-          }
-        }
-
-        args  <- lapply(self$dependencies, undelay)
-        expr = get_expr(self$expression)
-
-        # this seems really dangerous
-        mut_node_cdr(expr, as.pairlist(args))
-
-        env <- f_env(self$expression)
-
-        return(list(expr = expr, env = env))
-      },
-
-      prep_eval_distributed = function() {
-        if (!self$ready) {
-          stop("Task has unresolved dependencies: ",
-               names(self$unresolved_dependencies)
-              )
-        }
-
-        undelay <- function(x) {
-          if (inherits(x, "Delayed")) {
-            result_uuid <- x$job$result_uuid
-            if (!is.null(result_uuid)) {
-              return(distributed_from_uuid(x$job$result_uuid))
-            } else {
-              distributed_data(x$value)
-            }
-          } else if (inherits(x, "DistributedData")) {
-            x
-          } else {
-            new_distributed <- distributed_data(x)
-            # new_distributed$save()
-            return(new_distributed)
-          }
-        }
-
-        args  <- lapply(self$dependencies, undelay)
-        fun <- lang_fn(self$expression)
-        environment(fun) <- global_env()
-        delayed_call <- list(fun = fun, args = args)
-        return(delayed_call)
-      },
-
-      register_job = function(job) {
-        private$.job = job
-        private$.state = "running"
-      },
-
-      register_dependent = function(uuid) {
-        private$.dependents = c(private$.dependents, uuid)
-      },
-
-      compute = function(...) {
-        scheduler <- Scheduler$new(self, ...)
-        value <- scheduler$compute()
-        return(value)
+      if (is.null(name)) {
+        private$.name <- paste(deparse(get_expr(qexpr)), collapse = "")
+      } else {
+        private$.name <- name
       }
-    ),
 
-    active = list (
-      name = function(name) {
-        if (missing(name)) {
-          return(private$.name)
+      private$.sequential <- sequential
+      private$.expect_error <- expect_error
+      # TODO: this will break for nested expressions and also non-expressions
+      private$.dependencies <- lapply(lang_tail(qexpr),
+        eval_bare,
+        env = f_env(qexpr)
+      )
+
+      private$.delayed_dependencies <- which(sapply(
+        private$.dependencies,
+        inherits,
+        "Delayed"
+      ))
+      private$.unresolved_dependencies <- private$.delayed_dependencies
+
+      private$.uuid <- UUIDgenerate(use.time = TRUE)
+
+      self$update_state
+
+      invisible(self)
+    },
+
+    print = function() {
+      print(sprintf("delayed(%s)", private$.name))
+    },
+
+    prepare_eval = function() {
+      if (!self$ready) {
+        stop(
+          "Task has unresolved dependencies: ",
+          names(self$unresolved_dependencies)
+        )
+      }
+
+      undelay <- function(x) {
+        if (inherits(x, "Delayed")) {
+          return(x$value)
+        } else if (inherits(x, "DistributedData")) {
+          return(x$data)
         } else {
-          private$.name = name
+          return(x)
         }
-      },
+      }
+
+      args <- lapply(self$dependencies, undelay)
+      expr <- get_expr(self$expression)
+
+      # this seems really dangerous
+      mut_node_cdr(expr, as.pairlist(args))
+
+      env <- f_env(self$expression)
+
+      return(list(expr = expr, env = env))
+    },
+
+    prep_eval_distributed = function() {
+      if (!self$ready) {
+        stop(
+          "Task has unresolved dependencies: ",
+          names(self$unresolved_dependencies)
+        )
+      }
+
+      undelay <- function(x) {
+        if (inherits(x, "Delayed")) {
+          result_uuid <- x$job$result_uuid
+          if (!is.null(result_uuid)) {
+            return(distributed_from_uuid(x$job$result_uuid))
+          } else {
+            distributed_data(x$value)
+          }
+        } else if (inherits(x, "DistributedData")) {
+          x
+        } else {
+          new_distributed <- distributed_data(x)
+          # new_distributed$save()
+          return(new_distributed)
+        }
+      }
+
+      args <- lapply(self$dependencies, undelay)
+      fun <- lang_fn(self$expression)
+      environment(fun) <- global_env()
+      delayed_call <- list(fun = fun, args = args)
+      return(delayed_call)
+    },
+
+    register_job = function(job) {
+      private$.job <- job
+      private$.state <- "running"
+    },
+
+    register_dependent = function(uuid) {
+      private$.dependents <- c(private$.dependents, uuid)
+    },
+
+    compute = function(...) {
+      scheduler <- Scheduler$new(self, ...)
+      value <- scheduler$compute()
+      return(value)
+    }
+  ),
+
+  active = list(
+    name = function(name) {
+      if (missing(name)) {
+        return(private$.name)
+      } else {
+        private$.name <- name
+      }
+    },
 
     expression = function() {
       return(private$.qexpr)
@@ -151,9 +157,11 @@ Delayed <- R6Class(
     unresolved_dependencies = function() {
       current_unresolved <- private$.unresolved_dependencies
       all_dependencies <- private$.dependencies
-      newly_resolved <- sapply(all_dependencies[current_unresolved], `[[`,
-                               "resolved")
-      current_unresolved  <- current_unresolved[which(!newly_resolved)]
+      newly_resolved <- sapply(
+        all_dependencies[current_unresolved], `[[`,
+        "resolved"
+      )
+      current_unresolved <- current_unresolved[which(!newly_resolved)]
       private$.unresolved_dependencies <- current_unresolved
       return(all_dependencies[current_unresolved])
     },
@@ -164,14 +172,14 @@ Delayed <- R6Class(
 
     value = function() {
       result <- private$.job$value
-      if(!private$.expect_error){
+      if (!private$.expect_error) {
         # if we're not expecting this Delayed to return an error
         # check for errors and mark state as "error" if found
-        if(inherits(result,"error")||inherits(result,"try-error")){
+        if (inherits(result, "error") || inherits(result, "try-error")) {
           private$.state <- "error"
         }
       }
-        
+
       return(result)
     },
 
@@ -181,9 +189,9 @@ Delayed <- R6Class(
 
     update_state = function() {
       if ((private$.state == "waiting") &&
-          length(self$unresolved_dependencies) == 0) {
+        length(self$unresolved_dependencies) == 0) {
         private$.state <- "ready"
-      } else if ((private$.state=="running") && (private$.job$finished)) {
+      } else if ((private$.state == "running") && (private$.job$finished)) {
         private$.state <- "resolved"
       }
 
@@ -204,34 +212,33 @@ Delayed <- R6Class(
 
     sequential = function(force) {
       if (!missing(force)) {
-        private$.sequential = force
+        private$.sequential <- force
       }
       return(private$.sequential)
     },
-    
+
     expect_error = function(force) {
       if (!missing(force)) {
-        private$.expect_error = force
+        private$.expect_error <- force
       }
       return(private$.expect_error)
     }
-    
   ),
 
-  private = list(.name = NULL,
-                 .qexpr = NULL,
-                 .dependencies = list(),
-                 .delayed_dependencies = c(),
-                 .unresolved_dependencies = c(),
-                 .dependants = list(),
-                 .job = NULL,
-                 .uuid = NULL,
-                 .sequential = FALSE,
-                 .expect_error = FALSE,
-                 .state = "waiting",
-                 .dependents = c()
-
-                )
+  private = list(
+    .name = NULL,
+    .qexpr = NULL,
+    .dependencies = list(),
+    .delayed_dependencies = c(),
+    .unresolved_dependencies = c(),
+    .dependants = list(),
+    .job = NULL,
+    .uuid = NULL,
+    .sequential = FALSE,
+    .expect_error = FALSE,
+    .state = "waiting",
+    .dependents = c()
+  )
 )
 
 ################################################################################
@@ -266,15 +273,15 @@ delayed <- function(expr, sequential = FALSE, expect_error = FALSE) {
 #
 delayed_fun <- function(fun, sequential = FALSE, expect_error = FALSE) {
   fun_name <- as.character(match.call()[[2]])
-  delayed_f = function(...) {
-    call <- match.call(fun,sys.call())
+  delayed_f <- function(...) {
+    call <- match.call(fun, sys.call())
     call[[1]] <- as.name(fun_name)
 
-    #make sure we have the right function in the env
-    env <- new.env(parent=caller_env())
-    assign(fun_name,fun, envir=env)
+    # make sure we have the right function in the env
+    env <- new.env(parent = caller_env())
+    assign(fun_name, fun, envir = env)
     pq <- as_quosure(call, env)
-    Delayed$new(pq, sequential=sequential, expect_error = expect_error)
+    Delayed$new(pq, sequential = sequential, expect_error = expect_error)
   }
 }
 
@@ -294,8 +301,7 @@ delayed_fun <- function(fun, sequential = FALSE, expect_error = FALSE) {
 #
 bundle_delayed <- function(delayed_list) {
   delayed_bundle <- delayed_fun(bundle_args, sequential = TRUE)
-  bundle <- do.call(delayed_bundle,delayed_list)
+  bundle <- do.call(delayed_bundle, delayed_list)
   bundle$name <- "bundle"
   return(bundle)
 }
-
