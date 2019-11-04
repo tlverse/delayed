@@ -93,8 +93,9 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 ```
 
 _Remark:_ In the above, the delayed computation is carried out in parallel using
-the framework offered by the parallelization framework provided by the excellent
-[`future` package](https://github.com/HenrikBengtsson/future).
+the framework offered by the excellent [`future`
+package](https://github.com/HenrikBengtsson/future) and its associated
+ecosystem.
 
 ---
 

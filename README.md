@@ -100,14 +100,14 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -1.0238440 -0.8666738 -1.8188251 -0.9017554 -1.0649899 -1.2628151
-#> [7] -0.9019393
+#> [1] -0.6697397 -1.0751496 -1.2606063 -1.1100267 -1.0906962 -1.1846166
+#> [7] -0.8610878
 ```
 
 *Remark:* In the above, the delayed computation is carried out in
-parallel using the framework offered by the parallelization framework
-provided by the excellent [`future`
-package](https://github.com/HenrikBengtsson/future).
+parallel using the framework offered by the excellent [`future`
+package](https://github.com/HenrikBengtsson/future) and its associated
+ecosystem.
 
 -----
 
