@@ -29,7 +29,7 @@ Delayed <- R6Class(
       private$.sequential <- sequential
       private$.expect_error <- expect_error
       # TODO: this will break for nested expressions and non-expressions
-      private$.dependencies <- lapply(lang_tail(qexpr),
+      private$.dependencies <- lapply(call_args(qexpr),
         eval_bare,
         env = f_env(qexpr)
       )
@@ -107,7 +107,7 @@ Delayed <- R6Class(
       }
 
       args <- lapply(self$dependencies, undelay)
-      fun <- lang_fn(self$expression)
+      fun <- call_fn(self$expression)
       environment(fun) <- global_env()
       delayed_call <- list(fun = fun, args = args)
       return(delayed_call)
