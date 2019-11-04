@@ -70,7 +70,7 @@ computations via chaining of tasks:
 ``` r
 library(delayed)
 #> delayed: Framework for Parallelizing Dependent Tasks
-#> Version: 0.2.1
+#> Version: 0.3.0
 
 # delay a function that does a bit of math
 mapfun <- function(x, y) {(x + y) / (x - y)}
@@ -83,19 +83,15 @@ const <- 7
 
 # re-define the delayed object from above
 delayed_norm <- delayed(rnorm(n = const))
-#> Warning: `lang_tail()` is deprecated as of rlang 0.2.0.
-#> This warning is displayed once per session.
 delayed_pois <- delayed(rpois(n = const, lambda = const))
 chained_norm_pois <- delayed_mapfun(delayed_norm, delayed_pois)
 
 # compute it using the future plan (multicore with 2 cores)
 chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> run:0 ready:2 workers:2
-#> Warning: `mut_node_cdr()` is deprecated as of rlang 0.2.0.
-#> This warning is displayed once per session.
-#> updating rnorm(n = const) from ready to running
-#> run:1 ready:1 workers:2
 #> updating rpois(n = const, lambda = const) from ready to running
+#> run:1 ready:1 workers:2
+#> updating rnorm(n = const) from ready to running
 #> run:2 ready:0 workers:2
 #> updating rnorm(n = const) from running to resolved
 #> updating rpois(n = const, lambda = const) from running to resolved
@@ -104,12 +100,13 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -1.1015099 -0.7644574 -0.8879749 -0.5957813 -1.1428005 -0.4375130
-#> [7] -0.4547599
+#> [1] -1.0238440 -0.8666738 -1.8188251 -0.9017554 -1.0649899 -1.2628151
+#> [7] -0.9019393
 ```
 
 *Remark:* In the above, the delayed computation is carried out in
-parallel using the framework offered by the excellent [`future`
+parallel using the framework offered by the parallelization framework
+provided by the excellent [`future`
 package](https://github.com/HenrikBengtsson/future).
 
 -----
