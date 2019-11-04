@@ -28,7 +28,7 @@ Delayed <- R6Class(
 
       private$.sequential <- sequential
       private$.expect_error <- expect_error
-      # TODO: this will break for nested expressions and also non-expressions
+      # TODO: this will break for nested expressions and non-expressions
       private$.dependencies <- lapply(lang_tail(qexpr),
         eval_bare,
         env = f_env(qexpr)
@@ -74,7 +74,7 @@ Delayed <- R6Class(
       expr <- get_expr(self$expression)
 
       # this seems really dangerous
-      mut_node_cdr(expr, as.pairlist(args))
+      node_poke_cdr(expr, as.pairlist(args))
 
       env <- f_env(self$expression)
 
@@ -241,13 +241,14 @@ Delayed <- R6Class(
   )
 )
 
-################################################################################
+###############################################################################
 
 #' Generates Delayed Version of an Expression
 #'
 #' @param expr expression to delay
 #' @param sequential if TRUE, never parallelize this task
-#' @param expect_error if TRUE, pass error to downstream tasks instead of halting computation
+#' @param expect_error if TRUE, pass error to downstream tasks instead of
+#'  halting computation
 #'
 #' @rdname delayed
 #'
@@ -258,7 +259,7 @@ delayed <- function(expr, sequential = FALSE, expect_error = FALSE) {
   Delayed$new(qexpr, sequential = sequential, expect_error = expect_error)
 }
 
-################################################################################
+###############################################################################
 
 #' Generates Delayed Version of a Function
 #'
@@ -285,7 +286,7 @@ delayed_fun <- function(fun, sequential = FALSE, expect_error = FALSE) {
   }
 }
 
-################################################################################
+###############################################################################
 
 #' Bundle Delayed Objects
 #'
