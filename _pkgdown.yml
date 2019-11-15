@@ -1,0 +1,20 @@
+title: delayed
+url: http://tlverse.org/delayed
+template:
+  params:
+    bootswatch: flatly
+    ganalytics: UA-115145808-1
+navbar:
+  title: ""
+  left:
+    - text: "tlverse"
+      href: https://tlverse.org
+    - text: "delayed"
+      href: "index.html"
+    - text: "Overview"
+      href: articles/delayed.html
+    - text: "Reference"
+      href: "reference/index.html"
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/tlverse/delayed

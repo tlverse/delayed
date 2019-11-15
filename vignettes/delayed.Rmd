@@ -3,7 +3,7 @@ title: "`delayed`: A Framework for Parallelizing Dependent Tasks"
 author: "Jeremy R. Coyle"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
-bibliography: refs.bib
+bibliography: ../inst/REFERENCES.bib
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -28,7 +28,8 @@ build up a graph of interdependent tasks and then execute them in parallel in an
 order that optimizes performance [@daskLibrary]. The present package seeks to
 reproduce a subset of that functionality in R, specifically the
 [`delayed`](http://dask.pydata.org/en/latest/delayed.html) module. To
-parallelize across the tasks, we leverage the excellent [`future`](https://github.com/HenrikBengtsson/future/) package [@futurePackage].
+parallelize across the tasks, we leverage the excellent
+[`future`](https://github.com/HenrikBengtsson/future/) package [@futurePackage].
 
 The power of the `delayed` framework is best appreciated when demonstrated by
 example.
@@ -153,3 +154,4 @@ framework, though this work remains incomplete.
 ---
 
 ## References
+

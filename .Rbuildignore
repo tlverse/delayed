@@ -21,7 +21,7 @@
 ^README-.*\.png$
 ^cran-comments.md$
 ^CONTRIBUTING\.md$
+^_pkgdown\.yml$
 ^refs.bib$
 ^Makefile$
 ^LICENSE$
-

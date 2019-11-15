@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Method for Delayed Objects — plot.Delayed • delayed</title>
+<title>Find error in delayed chain — find_delayed_error • delayed</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Plot Method for Delayed Objects — plot.Delayed" />
-<meta property="og:description" content="Plot Method for Delayed Objects" />
+<meta property="og:title" content="Find error in delayed chain — find_delayed_error" />
+<meta property="og:description" content="Searches through a network of delayed objects for the first object with state &quot;error&quot;" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,42 +118,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Method for Delayed Objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tlverse/delayed/blob/master/R/task_graph.R'><code>R/task_graph.R</code></a></small>
-    <div class="hidden name"><code>plot.Delayed.Rd</code></div>
+    <h1>Find error in delayed chain</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tlverse/delayed/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>find_delayed_error.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot Method for Delayed Objects</p>
+    <p>Searches through a network of delayed objects for the first object with state "error"</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for Delayed</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='st'>"500px"</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='st'>"100%"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>find_delayed_error</span>(<span class='no'>delayed_object</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An object of class <code>Delayed</code> for which a task dependency graph
-will be generated.</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>If true, color-code nodes according to status, and display legend</p></td>
-    </tr>
-    <tr>
-      <th>height</th>
-      <td><p>passed to visNetwork</p></td>
-    </tr>
-    <tr>
-      <th>width</th>
-      <td><p>passed to visNetwork</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arugments (passed to visNetwork).</p></td>
+      <th>delayed_object</th>
+      <td><p>the object in which an error occured</p></td>
     </tr>
     </table>
 

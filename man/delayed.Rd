@@ -14,13 +14,12 @@ delayed_fun(fun, sequential = FALSE, expect_error = FALSE)
 
 \item{sequential}{if TRUE, never parallelize this task}
 
-\item{expect_error}{if TRUE, pass error to downstream tasks instead of halting computation}
+\item{expect_error}{if TRUE, pass error to downstream tasks instead of
+halting computation}
 
 \item{fun}{function to delay}
 }
 \description{
-Generates Delayed Version of an Expression
-
 A Delayed version of a function may be called to generate
 Delayed objects
 }
