@@ -1,7 +1,6 @@
 .onAttach <- function(...) {
-  packageStartupMessage("delayed: Framework for Parallelizing Dependent Tasks")
-  packageStartupMessage(
-    "Version: ",
-    utils::packageDescription("delayed")$Version
-  )
+  packageStartupMessage(paste0(
+    "delayed v", utils::packageDescription("delayed")$Version,
+    ": Framework for Parallelizing Dependent Tasks"
+  ))
 }

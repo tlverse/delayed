@@ -90,8 +90,7 @@
 
     
     
-<pre><code>## delayed: Framework for Parallelizing Dependent Tasks</code></pre>
-<pre><code>## Version: 0.3.0</code></pre>
+<pre><code>## delayed v0.3.0: Framework for Parallelizing Dependent Tasks</code></pre>
 <p>R supports a range of options to parallelize computation. For an overview, see the <a href="https://cran.r-project.org/web/views/HighPerformanceComputing.html">HPC Task View</a> on CRAN. In general, these options work extremely well for problems that are <em>embarassingly parallel</em>, in that they support procedures such as parallel <code>lapply</code> calls and parallel <code>for</code> loops – essentially <code>map</code> operations. However, there is no easy way to parallelize <em>dependent</em> tasks in R.</p>
 <p>In contrast, the Python language has the excellent framework for exactly this purpose – <a href="http://dask.pydata.org/en/latest/"><code>dask</code></a>. <code>dask</code> makes it easy to build up a graph of interdependent tasks and then execute them in parallel in an order that optimizes performance <span class="citation">(Dask Development Team 2016)</span>. The present package seeks to reproduce a subset of that functionality in R, specifically the <a href="http://dask.pydata.org/en/latest/delayed.html"><code>delayed</code></a> module. To parallelize across the tasks, we leverage the excellent <a href="https://github.com/HenrikBengtsson/future/"><code>future</code></a> package <span class="citation">(Bengtsson 2017)</span>.</p>
 <p>The power of the <code>delayed</code> framework is best appreciated when demonstrated by example.</p>
@@ -101,62 +100,62 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <p>The two primary ways to generate <code>Delayed</code> objects in R are via the <code>delayed</code> and <code>delayed_fun</code> functions.</p>
 <p><code>delayed</code> is used to delay expressions</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># delay a simple expression</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">delayed_object &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(delayed_object)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># delay a simple expression</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">delayed_object &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(delayed_object)</a></code></pre></div>
 <pre><code>## [1] "delayed(3 + 4)"</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># compute its result</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">delayed_object<span class="op">$</span><span class="kw">compute</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># compute its result</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">delayed_object<span class="op">$</span><span class="kw">compute</span>()</a></code></pre></div>
 <pre><code>## [1] 7</code></pre>
 <p>…while <code>delayed_fun</code> wraps a function so that it returns <code>Delayed</code> results</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># delay a function</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">x2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {x <span class="op">*</span><span class="st"> </span>x}</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">delayed_x2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed_fun</a></span>(x2)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># calling it returns a delayed call</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">delayed_object &lt;-<span class="st"> </span><span class="kw">delayed_x2</span>(<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(delayed_object)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># delay a function</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">x2 &lt;-<span class="st"> </span><span class="cf">function</span>(x) {x <span class="op">*</span><span class="st"> </span>x}</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">delayed_x2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed_fun</a></span>(x2)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># calling it returns a delayed call</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">delayed_object &lt;-<span class="st"> </span><span class="kw">delayed_x2</span>(<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(delayed_object)</a></code></pre></div>
 <pre><code>## [1] "delayed(x2(x = 4))"</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># again, we can compute its result</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">delayed_object<span class="op">$</span><span class="kw">compute</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># again, we can compute its result</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">delayed_object<span class="op">$</span><span class="kw">compute</span>()</a></code></pre></div>
 <pre><code>## [1] 16</code></pre>
 <p>These elements of the functionality of <code>delayed</code> are substantially similar to the facilities already offered by the <code>future</code> package. <code>delayed</code> diverges from <code>future</code> by offereing the ability to chain <code>Delayed</code> objects together. For example:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># delay a simple expression</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">delayed_object_<span class="dv">7</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># and another</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">delayed_object_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co"># delay a function for addition</span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">adder &lt;-<span class="st"> </span><span class="cf">function</span>(x, y){x <span class="op">+</span><span class="st"> </span>y}</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">delayed_adder &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed_fun</a></span>(adder)</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co"># but now, use one delayed as input to another</span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12">chained_delayed_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">delayed_adder</span>(delayed_object_<span class="dv">7</span>, delayed_object_<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co"># We can still compute its result.</span></a>
-<a class="sourceLine" id="cb11-15" data-line-number="15">chained_delayed_<span class="dv">10</span><span class="op">$</span><span class="kw">compute</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># delay a simple expression</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">delayed_object_<span class="dv">7</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co"># and another</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">delayed_object_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co"># delay a function for addition</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">adder &lt;-<span class="st"> </span><span class="cf">function</span>(x, y){x <span class="op">+</span><span class="st"> </span>y}</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">delayed_adder &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed_fun</a></span>(adder)</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co"># but now, use one delayed as input to another</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">chained_delayed_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">delayed_adder</span>(delayed_object_<span class="dv">7</span>, delayed_object_<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb10-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co"># We can still compute its result.</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">chained_delayed_<span class="dv">10</span><span class="op">$</span><span class="kw">compute</span>()</a></code></pre></div>
 <pre><code>## [1] 10</code></pre>
 <p>We can visualize the dependency structure of these delayed tasks by calling <code>plot</code> on the resultant <code>Delayed</code> object:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(chained_delayed_<span class="dv">10</span>)</a></code></pre></div>
-<div id="htmlwidget-4e6f1e75a21dd214023c" style="width:100%;height:500px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4e6f1e75a21dd214023c">{"x":{"nodes":{"id":["065a1d20-212d-11ea-addb-144f8af010c2","06599468-212d-11ea-addb-144f8af010c2","0659bede-212d-11ea-addb-144f8af010c2"],"label":["adder(x = delayed_object_7, y = delayed_object_3)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"group":["resolved","resolved","resolved"],"shape":["dot","dot","dot"]},"edges":{"from":["06599468-212d-11ea-addb-144f8af010c2","0659bede-212d-11ea-addb-144f8af010c2"],"to":["065a1d20-212d-11ea-addb-144f8af010c2","065a1d20-212d-11ea-addb-144f8af010c2"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"nodeSpacing":200,"direction":"RL"}},"groups":{"waiting":{"color":{"border":"black","background":"white"}},"ready":{"color":{"border":"black","background":"orange"}},"running":{"color":{"border":"black","background":"lightgreen"}},"resolved":{"color":{"border":"black","background":"black"}},"useDefaultGroups":true,"error":{"color":{"border":"black","background":"lightpink"}}}},"groups":["resolved"],"width":"100%","height":"500px","idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["waiting","ready","running","resolved","error","sequential","parallel"],"color":[{"border":"black","background":"white"},{"border":"black","background":"orange"},{"border":"black","background":"lightgreen"},{"border":"black","background":"black"},{"border":"black","background":"lightpink"},{"border":"black","background":"white"},{"border":"black","background":"white"}],"shape":["dot","dot","dot","dot","dot","square","dot"]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script><hr>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(chained_delayed_<span class="dv">10</span>)</a></code></pre></div>
+<div id="htmlwidget-a4a02ad4102d52b19a6a" style="width:100%;height:500px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a4a02ad4102d52b19a6a">{"x":{"nodes":{"id":["a0be71da-212e-11ea-a8a5-144f8af010c2","a0bddcf2-212e-11ea-a8a5-144f8af010c2","a0be09c0-212e-11ea-a8a5-144f8af010c2"],"label":["adder(x = delayed_object_7, y = delayed_object_3)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"group":["resolved","resolved","resolved"],"shape":["dot","dot","dot"]},"edges":{"from":["a0bddcf2-212e-11ea-a8a5-144f8af010c2","a0be09c0-212e-11ea-a8a5-144f8af010c2"],"to":["a0be71da-212e-11ea-a8a5-144f8af010c2","a0be71da-212e-11ea-a8a5-144f8af010c2"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"nodeSpacing":200,"direction":"RL"}},"groups":{"waiting":{"color":{"border":"black","background":"white"}},"ready":{"color":{"border":"black","background":"orange"}},"running":{"color":{"border":"black","background":"lightgreen"}},"resolved":{"color":{"border":"black","background":"black"}},"useDefaultGroups":true,"error":{"color":{"border":"black","background":"lightpink"}}}},"groups":["resolved"],"width":"100%","height":"500px","idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["waiting","ready","running","resolved","error","sequential","parallel"],"color":[{"border":"black","background":"white"},{"border":"black","background":"orange"},{"border":"black","background":"lightgreen"},{"border":"black","background":"black"},{"border":"black","background":"lightpink"},{"border":"black","background":"white"},{"border":"black","background":"white"}],"shape":["dot","dot","dot","dot","dot","square","dot"]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script><hr>
 </div>
 <div id="parallelization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parallelization" class="anchor"></a>Parallelization</h2>
 <p>Now that we’ve had an elementary look at the functionality offered by <code>delayed</code>, we may take a look at how to parallelize dependent computations – the core problem addressed by the package. We can easily parallelize across dependency structures by specifying a <code>future</code> <code>plan</code>. Let’s try it out</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(future)</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span>(multicore, <span class="dt">workers =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co"># re-define the delayed object from above</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">delayed_object_<span class="dv">7</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">delayed_object_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">chained_delayed_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">delayed_adder</span>(delayed_object_<span class="dv">7</span>, delayed_object_<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co"># compute it using the future plan (two multicore workers), verbose mode lets us</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co"># see the computation order</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">chained_delayed_<span class="dv">10</span><span class="op">$</span><span class="kw">compute</span>(<span class="dt">nworkers =</span> <span class="dv">2</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(future)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span>(multicore, <span class="dt">workers =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co"># re-define the delayed object from above</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">delayed_object_<span class="dv">7</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">delayed_object_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">chained_delayed_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">delayed_adder</span>(delayed_object_<span class="dv">7</span>, delayed_object_<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co"># compute it using the future plan (two multicore workers), verbose mode lets us</span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co"># see the computation order</span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11">chained_delayed_<span class="dv">10</span><span class="op">$</span><span class="kw">compute</span>(<span class="dt">nworkers =</span> <span class="dv">2</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## run:0 ready:2 workers:2</code></pre>
 <pre><code>## updating 1 + 2 from ready to running</code></pre>
 <pre><code>## run:1 ready:1 workers:2</code></pre>
