@@ -84,3 +84,36 @@ test_that("more scoping tests", {
 
   expect_equal(wrapper2()$compute(), 4)
 })
+
+
+
+test_that("progress bar", {
+  ident_fun <- function(x){Sys.sleep(0.01); x}
+  delayed_ident <- delayed_fun(ident_fun)
+  d_list <- lapply(1:1e2, delayed_ident)
+  d_bundle <- bundle_delayed(d_list)
+  res <- d_bundle$compute(progress=TRUE)
+
+  
+  delayed_adder <- delayed_fun(adder)
+  
+  wrapper <- function(my_delayed_fun) {
+    a <- 1
+    b <- 4
+    d <- my_delayed_fun(a, b)
+    return(d$compute())
+  }
+  
+  
+  expect_equal(wrapper(delayed_adder), 5)
+  
+  wrapper2 <- function() {
+    delayed_adder2 <- delayed_fun(adder)
+    a <- 3
+    b <- 1
+    d <- delayed_adder(a, b)
+    return(d)
+  }
+  
+  expect_equal(wrapper2()$compute(), 4)
+})
