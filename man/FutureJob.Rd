@@ -4,7 +4,12 @@
 \name{FutureJob}
 \alias{FutureJob}
 \title{Future Delayed Jobs}
+\format{An object of class \code{R6ClassGenerator} of length 24.}
+\usage{
+FutureJob
+}
 \description{
 A \code{Job} that leverages the \code{future} framework to
 evaluate asynchronously.
 }
+\keyword{datasets}

@@ -16,8 +16,8 @@ Delayed <- R6Class(
   class = TRUE,
   public = list(
     initialize = function(qexpr,
-                          name = NULL,
-                          sequential = FALSE, expect_error = FALSE) {
+                              name = NULL,
+                              sequential = FALSE, expect_error = FALSE) {
       private$.qexpr <- qexpr
 
       if (is.null(name)) {

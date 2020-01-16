@@ -12,10 +12,10 @@ Scheduler <- R6Class(
   class = TRUE,
   public = list(
     initialize = function(delayed_object,
-                          job_type = FutureJob,
-                          nworkers = NULL,
-                          verbose = FALSE, 
-                          progress = FALSE, ...) {
+                              job_type = FutureJob,
+                              nworkers = NULL,
+                              verbose = FALSE,
+                              progress = FALSE, ...) {
       private$.delayed_object <- delayed_object
 
       private$.task_lists <- list(
@@ -27,11 +27,11 @@ Scheduler <- R6Class(
       )
 
       self$enumerate_tasks(delayed_object)
-      
-      private$.n_tasks <- sum(sapply(private$.task_lists,length))
-      
-      if(progress){
-        private$.progress = progress_bar$new(total =  private$.n_tasks)
+
+      private$.n_tasks <- sum(sapply(private$.task_lists, length))
+
+      if (progress) {
+        private$.progress <- progress_bar$new(total = private$.n_tasks)
       }
       private$.job_type <- job_type
 
@@ -55,7 +55,7 @@ Scheduler <- R6Class(
     },
 
     enumerate_tasks = function(delayed_object,
-                               dependent_uuid = NULL) {
+                                   dependent_uuid = NULL) {
       state <- delayed_object$update_state
       uuid <- delayed_object$uuid
       assign(uuid, delayed_object, envir = private$.task_lists[[state]])
@@ -163,10 +163,10 @@ Scheduler <- R6Class(
           }
         }
       }
-      
-      if(!is.null(private$.progress)){
+
+      if (!is.null(private$.progress)) {
         complete_or_error <- length(private$.task_lists$resolved) + length(private$.task_lists$error)
-        private$.progress$update(complete_or_error/private$.n_tasks)
+        private$.progress$update(complete_or_error / private$.n_tasks)
       }
       return(updated_tasks)
     },

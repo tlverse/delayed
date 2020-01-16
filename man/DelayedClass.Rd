@@ -4,6 +4,11 @@
 \name{Delayed}
 \alias{Delayed}
 \title{Delayed class that manages dependencies and computes when necessary}
+\format{An object of class \code{R6ClassGenerator} of length 24.}
+\usage{
+Delayed
+}
 \description{
 Delayed class that manages dependencies and computes when necessary
 }
+\keyword{datasets}

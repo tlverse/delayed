@@ -4,6 +4,11 @@
 \name{Scheduler}
 \alias{Scheduler}
 \title{Scheduler class that orders compute tasks and dispatches tasks to workers via \code{make_future()}}
+\format{An object of class \code{R6ClassGenerator} of length 24.}
+\usage{
+Scheduler
+}
 \description{
 Scheduler class that orders compute tasks and dispatches tasks to workers via \code{make_future()}
 }
+\keyword{datasets}

@@ -4,7 +4,8 @@
 \alias{plot.Delayed}
 \title{Plot Method for Delayed Objects}
 \usage{
-\method{plot}{Delayed}(x, color = TRUE, height = "500px", width = "100\%", ...)
+\method{plot}{Delayed}(x, color = TRUE, height = "500px",
+  width = "100\%", ...)
 }
 \arguments{
 \item{x}{An object of class \code{Delayed} for which a task dependency graph
