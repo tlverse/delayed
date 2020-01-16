@@ -89,9 +89,9 @@ chained_norm_pois <- delayed_mapfun(delayed_norm, delayed_pois)
 # compute it using the future plan (multicore with 2 cores)
 chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> run:0 ready:2 workers:2
-#> updating rpois(n = const, lambda = const) from ready to running
-#> run:1 ready:1 workers:2
 #> updating rnorm(n = const) from ready to running
+#> run:1 ready:1 workers:2
+#> updating rpois(n = const, lambda = const) from ready to running
 #> run:2 ready:0 workers:2
 #> updating rnorm(n = const) from running to resolved
 #> updating rpois(n = const, lambda = const) from running to resolved
@@ -100,7 +100,7 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -0.6918117 -1.0087146 -1.2477743 -0.9367221 -0.4134421 -1.1924258 -0.6243587
+#> [1] -0.7881541 -1.9850219 -0.9978775 -1.3489321 -1.9254182 -0.8448502 -0.8064325
 ```
 
 *Remark:* In the above, the delayed computation is carried out in
@@ -112,7 +112,7 @@ ecosystem.
 
 ## License
 
-© 2017-2019 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
+© 2017-2020 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
 
 The contents of this repository are distributed under the GPL-3 license.
 See file `LICENSE` for details.
