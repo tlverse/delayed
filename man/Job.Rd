@@ -4,6 +4,10 @@
 \name{Job}
 \alias{Job}
 \title{Evaluation of Delayed Objects}
+\format{An object of class \code{R6ClassGenerator} of length 24.}
+\usage{
+Job
+}
 \description{
 A \code{Job} encapsulates the act of evaluating a given
 \code{delayed} object in a particular way. \code{SequentialJob}s evaluate
@@ -11,3 +15,4 @@ immediately, blocking the current process until they are complete.
 '\code{FutureJob}s leverage the \code{future} package to evaluate according
 to the specified \code{future::plan}.
 }
+\keyword{datasets}

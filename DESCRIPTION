@@ -25,7 +25,8 @@ Imports:
     assertthat,
     visNetwork,
     uuid,
-    BBmisc
+    BBmisc,
+    progress
 Suggests:
     testthat,
     knitr,
