@@ -101,7 +101,7 @@ ecosystem.
 
 ## License
 
-&copy; 2017-2019 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
+&copy; 2017-2020 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
 
 The contents of this repository are distributed under the GPL-3 license. See
 file `LICENSE` for details.

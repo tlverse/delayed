@@ -8,10 +8,11 @@ Authors@R: c(
     person("Nima", "Hejazi", email = "nh@nimahejazi.org",
            role = "ctb",
            comment = c(ORCID = "0000-0002-7127-2789")))
-Description: This package provides mechanisms to parallelize dependent tasks in
-    a manner that optimizes the compute resources available. It provides access
-    to "delayed" computations, which may be parallelized using futures. It is,
-    to an extent, a facsimile of the Dask library, for the Python language.
+Description: Mechanisms to parallelize dependent tasks in a manner that
+    optimizes the compute resources available. It provides access to "delayed"
+    computations, which may be parallelized using futures. It is, to an extent,
+    a facsimile of the 'Dask' library (<https://dask.org/>), for the 'Python'
+    language.
 Depends:
     R (>= 3.2.0)
 Imports:
