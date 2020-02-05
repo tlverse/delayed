@@ -84,3 +84,17 @@ test_that("more scoping tests", {
 
   expect_equal(wrapper2()$compute(), 4)
 })
+
+
+
+test_that("progress bar", {
+  ident_fun <- function(x) {
+    Sys.sleep(0.01)
+    x
+  }
+  delayed_ident <- delayed_fun(ident_fun)
+  d_list <- lapply(1:1e2, delayed_ident)
+  d_bundle <- bundle_delayed(d_list)
+  res <- d_bundle$compute(progress = TRUE)
+  
+})

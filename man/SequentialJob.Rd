@@ -4,7 +4,12 @@
 \name{SequentialJob}
 \alias{SequentialJob}
 \title{Sequential Delayed Jobs}
+\format{An object of class \code{R6ClassGenerator} of length 24.}
+\usage{
+SequentialJob
+}
 \description{
 A \code{Job} that will evaluate immediately (i.e., in a
 sequential fashion), blocking the current process until it completes.
 }
+\keyword{datasets}
