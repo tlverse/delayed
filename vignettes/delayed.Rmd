@@ -16,7 +16,7 @@ library(delayed)
 
 R supports a range of options to parallelize computation. For an overview, see
 the [HPC Task
-View](https://CRAN.R-project.org/view=HighPerformanceComputingl) on
+View](https://CRAN.R-project.org/view=HighPerformanceComputing) on
 CRAN. In general, these options work extremely well for problems that are
 _embarassingly parallel_, in that they support procedures such as parallel
 `lapply` calls and parallel `for` loops -- essentially `map` operations.

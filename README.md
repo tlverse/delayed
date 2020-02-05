@@ -100,7 +100,7 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -0.7881541 -1.9850219 -0.9978775 -1.3489321 -1.9254182 -0.8448502 -0.8064325
+#> [1] -1.0309026 -1.1502324 -0.9445653 -0.9669096 -1.1232399 -0.9045539 -0.6379960
 ```
 
 *Remark:* In the above, the delayed computation is carried out in
