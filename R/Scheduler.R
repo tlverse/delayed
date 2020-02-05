@@ -12,10 +12,10 @@ Scheduler <- R6Class(
   class = TRUE,
   public = list(
     initialize = function(delayed_object,
-                              job_type = FutureJob,
-                              nworkers = NULL,
-                              verbose = FALSE,
-                              progress = FALSE, ...) {
+                          job_type = FutureJob,
+                          nworkers = NULL,
+                          verbose = FALSE,
+                          progress = FALSE, ...) {
       private$.delayed_object <- delayed_object
 
       private$.task_lists <- list(
@@ -55,7 +55,7 @@ Scheduler <- R6Class(
     },
 
     enumerate_tasks = function(delayed_object,
-                                   dependent_uuid = NULL) {
+                               dependent_uuid = NULL) {
       state <- delayed_object$update_state
       uuid <- delayed_object$uuid
       assign(uuid, delayed_object, envir = private$.task_lists[[state]])
