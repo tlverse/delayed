@@ -16,3 +16,4 @@ make_graph(delayed_object, graph = NULL, level = 1)
 \description{
 Graphical Representation of a Task Dependency Structure
 }
+\keyword{internal}

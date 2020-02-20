@@ -10,7 +10,8 @@
 \item{x}{An object of class \code{Delayed} for which a task dependency graph
 will be generated.}
 
-\item{color}{If true, color-code nodes according to status, and display legend}
+\item{color}{If \code{TRUE}, color-code nodes according to status, and
+display legend}
 
 \item{height}{passed to visNetwork}
 
@@ -20,4 +21,16 @@ will be generated.}
 }
 \description{
 Plot Method for Delayed Objects
+}
+\examples{
+adder <- function(x, y) {
+  x + y
+}
+delayed_adder <- delayed_fun(adder)
+z <- delayed_adder(3, 4)
+z2 <- delayed_adder(z, 4)
+z2$sequential <- TRUE
+z3 <- delayed_adder(z2, z)
+plot(z3)
+
 }

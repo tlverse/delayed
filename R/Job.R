@@ -10,8 +10,7 @@
 #'
 #' @importFrom R6 R6Class
 #'
-#' @export
-#
+#' @keywords internal
 Job <- R6Class(
   classname = "Job",
   cloneable = FALSE,
@@ -52,8 +51,7 @@ Job <- R6Class(
 #'
 #' @importFrom R6 R6Class
 #'
-#' @export
-#
+#' @keywords internal
 SequentialJob <- R6Class(
   classname = "SequentialJob",
   cloneable = FALSE,
@@ -100,8 +98,7 @@ SequentialJob <- R6Class(
 #' @importFrom R6 R6Class
 #' @importFrom future future resolved value
 #'
-#' @export
-#
+#' @keywords internal
 FutureJob <- R6Class(
   classname = "FutureJob",
   cloneable = FALSE,

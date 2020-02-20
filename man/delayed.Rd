@@ -23,3 +23,15 @@ halting computation}
 A Delayed version of a function may be called to generate
 Delayed objects
 }
+\examples{
+d <- delayed(3 + 4)
+d$compute()
+
+adder <- function(x, y) {
+  x + y
+}
+delayed_adder <- delayed_fun(adder)
+z <- delayed_adder(3, 4)
+z$compute()
+
+}

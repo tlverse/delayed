@@ -10,5 +10,14 @@ find_delayed_error(delayed_object)
 \item{delayed_object}{the object in which an error occured}
 }
 \description{
-Searches through a network of delayed objects for the first object with state "error"
+Searches through a network of delayed objects for the first
+object with state "error"
+}
+\examples{
+delayed_error <- delayed_fun(stop)
+error_message <- "this is an error"
+broken_delayed <- delayed_error(error_message)
+broken_delayed$expect_error <- TRUE
+result <- broken_delayed$compute()
+
 }

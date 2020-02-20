@@ -7,8 +7,7 @@
 #' @importFrom data.table address
 #' @importFrom igraph make_empty_graph edge vertex V V<- as_data_frame
 #'
-#' @export
-#
+#' @keywords internal
 make_graph <- function(delayed_object, graph = NULL, level = 1) {
   if (is.null(graph)) {
     graph <- make_empty_graph()
@@ -57,16 +56,30 @@ make_graph <- function(delayed_object, graph = NULL, level = 1) {
 #' Plot Method for Delayed Objects
 #'
 #' @param x An object of class \code{Delayed} for which a task dependency graph
-#' will be generated.
-#' @param color If true, color-code nodes according to status, and display legend
+#'  will be generated.
+#' @param color If \code{TRUE}, color-code nodes according to status, and
+#'  display legend
 #' @param height passed to visNetwork
 #' @param width passed to visNetwork
 #' @param ... Additional arugments (passed to visNetwork).
 #'
-#' @importFrom visNetwork visNetwork visEdges visHierarchicalLayout visLegend visGroups %>%
+#' @importFrom visNetwork visNetwork visEdges visHierarchicalLayout visLegend
+#'  visGroups %>%
+#'
+#' @method plot Delayed
+#'
+#' @examples
+#' adder <- function(x, y) {
+#'   x + y
+#' }
+#' delayed_adder <- delayed_fun(adder)
+#' z <- delayed_adder(3, 4)
+#' z2 <- delayed_adder(z, 4)
+#' z2$sequential <- TRUE
+#' z3 <- delayed_adder(z2, z)
+#' plot(z3)
 #'
 #' @export
-#
 plot.Delayed <- function(x, color = TRUE, height = "500px", width = "100%", ...) {
   graph <- make_graph(x)
   nodes <- as_data_frame(graph, "vertices")
@@ -90,7 +103,8 @@ plot.Delayed <- function(x, color = TRUE, height = "500px", width = "100%", ...)
   # make graph
   network <- visNetwork(nodes, edges, height = height, width = width, ...) %>%
     visEdges(arrows = "to") %>%
-    visHierarchicalLayout(direction = "RL", levelSeparation = 500, nodeSpacing = 200)
+    visHierarchicalLayout(direction = "RL", levelSeparation = 500,
+                          nodeSpacing = 200)
 
   if (color) {
     # define map between state and node color
@@ -123,7 +137,8 @@ plot.Delayed <- function(x, color = TRUE, height = "500px", width = "100%", ...)
     legend_nodes_shape$shape <- c("square", "dot")
 
     legend_nodes <- rbind(legend_nodes_color, legend_nodes_shape)
-    network <- network %>% visLegend(useGroups = FALSE, addNodes = legend_nodes)
+    network <- network %>% visLegend(useGroups = FALSE,
+                                     addNodes = legend_nodes)
   } else {
     network <- network %>% visGroups(
       groupname = "none",

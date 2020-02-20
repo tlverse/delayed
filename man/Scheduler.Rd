@@ -3,7 +3,10 @@
 \docType{class}
 \name{Scheduler}
 \alias{Scheduler}
-\title{Scheduler class that orders compute tasks and dispatches tasks to workers via \code{make_future()}}
+\title{Scheduler class that orders compute tasks and dispatches tasks to workers
+via \code{make_future()}}
 \description{
-Scheduler class that orders compute tasks and dispatches tasks to workers via \code{make_future()}
+Scheduler class that orders compute tasks and dispatches tasks to workers
+via \code{make_future()}
 }
+\keyword{internal}

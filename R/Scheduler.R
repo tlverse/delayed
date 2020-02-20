@@ -1,10 +1,14 @@
-#' Scheduler class that orders compute tasks and dispatches tasks to workers via \code{make_future()}
+#' Scheduler class that orders compute tasks and dispatches tasks to workers
+#' via \code{make_future()}
+#'
 #' @docType class
+#'
 #' @importFrom R6 R6Class
 #' @importFrom rstackdeque rstack
 #' @importFrom future plan
 #' @importFrom progress progress_bar
-#' @export
+#'
+#' @keywords internal
 Scheduler <- R6Class(
   classname = "Scheduler",
   cloneable = FALSE,
@@ -141,7 +145,8 @@ Scheduler <- R6Class(
           updated_tasks <- c(updated_tasks, newly_completed)
           lapply(newly_completed, `[[`, "value") # force value collection
           # check for errors (currently detected on Delayed$value)
-          new_states <- sapply(newly_completed, `[[`, "state") # force value collection
+          # force value collection
+          new_states <- sapply(newly_completed, `[[`, "state")
           if (any(new_states == "error")) {
             errored_tasks <- newly_completed[which(new_states == "error")]
             first_error <- errored_tasks[[1]]
@@ -165,7 +170,8 @@ Scheduler <- R6Class(
       }
 
       if (!is.null(private$.progress)) {
-        complete_or_error <- length(private$.task_lists$resolved) + length(private$.task_lists$error)
+        complete_or_error <- length(private$.task_lists$resolved) +
+          length(private$.task_lists$error)
         private$.progress$update(complete_or_error / private$.n_tasks)
       }
       return(updated_tasks)
@@ -224,7 +230,7 @@ Scheduler <- R6Class(
   )
 )
 
-################################################################################
+###############################################################################
 
 closest_dependent_count <- function(task, waiting_tasks) {
   if (length(task$dependents) == 0) {

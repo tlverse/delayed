@@ -115,8 +115,8 @@ delayed_object_7 <- delayed(3 + 4)
 delayed_object_3 <- delayed(1 + 2)
 chained_delayed_10 <- delayed_adder(delayed_object_7, delayed_object_3)
 
-# compute it using the future plan (two multicore workers), verbose mode lets us
-# see the computation order
+# compute it using the future plan (two multicore workers), verbose mode lets
+# us see the computation order
 chained_delayed_10$compute(nworkers = 2, verbose = TRUE)
 ```
 
@@ -144,7 +144,7 @@ here: https://distributed.readthedocs.io/en/latest/scheduling-policies.html
 
 ### Distributed Data
 
-Another key features of `dask` is [_data 
+Another key features of `dask` is [_data
 locality_](https://distributed.readthedocs.io/en/latest/locality.html). That is,
 data is only present on workers that need it for a given task, and is only
 shared between workers when necessary. Tasks are then prioritized to workers

@@ -11,3 +11,4 @@ immediately, blocking the current process until they are complete.
 '\code{FutureJob}s leverage the \code{future} package to evaluate according
 to the specified \code{future::plan}.
 }
+\keyword{internal}

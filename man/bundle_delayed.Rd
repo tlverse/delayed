@@ -19,3 +19,15 @@ bundle_args(...)
 Bundling \code{Delayed} objects builds a single \code{Delayed}
 object out of an arbitrary number of input \code{Delayed} objects.
 }
+\examples{
+ident_fun <- function(x) {
+  Sys.sleep(0.01)
+  x
+}
+delayed_ident <- delayed_fun(ident_fun)
+d_list <- lapply(1:10, delayed_ident)
+d_bundle <- bundle_delayed(d_list)
+d_bundle$compute(progress = FALSE)
+
+}
+\keyword{internal}

@@ -8,3 +8,4 @@
 A \code{Job} that leverages the \code{future} framework to
 evaluate asynchronously.
 }
+\keyword{internal}

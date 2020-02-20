@@ -5,5 +5,4 @@ delayed_traceback <- function() {
 }
 
 delayed_log_traceback <- function() {
-
 }

@@ -8,3 +8,4 @@
 A \code{Job} that will evaluate immediately (i.e., in a
 sequential fashion), blocking the current process until it completes.
 }
+\keyword{internal}

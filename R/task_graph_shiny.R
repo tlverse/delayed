@@ -1,9 +1,25 @@
 #' Animated Representation a Task Dependency Structure
+#'
 #' @description uses shiny
+#'
 #' @param scheduler the scheduler to animate
+#'
 #' @import visNetwork
+#'
+#' @examples
+#' \donttest{
+#' adder <- function(x, y) {
+#'   x + y
+#' }
+#' delayed_adder <- delayed_fun(adder)
+#' z <- delayed_adder(3, 4)
+#' z2 <- delayed_adder(z, 4)
+#' z2$sequential <- TRUE
+#' z3 <- delayed_adder(z2, z)
+#' plot_delayed_shiny(z3)
+#' }
+#'
 #' @export
-#
 plot_delayed_shiny <- function(scheduler) {
   requirePackages("shiny")
 
@@ -50,8 +66,6 @@ plot_delayed_shiny <- function(scheduler) {
     shiny::actionButton("start", "Click to start/pause computation"),
     visNetworkOutput("network")
   )
-
   app <- shiny::shinyApp(ui = ui, server = server)
-
   shiny::runApp(app)
 }

@@ -7,3 +7,9 @@
 \description{
 Delayed class that manages dependencies and computes when necessary
 }
+\examples{
+d <- delayed(3 + 4)
+methods::is(d, "Delayed")
+d$compute()
+
+}
