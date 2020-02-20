@@ -78,7 +78,6 @@ make_graph <- function(delayed_object, graph = NULL, level = 1) {
 #' z2$sequential <- TRUE
 #' z3 <- delayed_adder(z2, z)
 #' plot(z3)
-#'
 #' @export
 plot.Delayed <- function(x, color = TRUE, height = "500px", width = "100%", ...) {
   graph <- make_graph(x)
@@ -103,8 +102,10 @@ plot.Delayed <- function(x, color = TRUE, height = "500px", width = "100%", ...)
   # make graph
   network <- visNetwork(nodes, edges, height = height, width = width, ...) %>%
     visEdges(arrows = "to") %>%
-    visHierarchicalLayout(direction = "RL", levelSeparation = 500,
-                          nodeSpacing = 200)
+    visHierarchicalLayout(
+      direction = "RL", levelSeparation = 500,
+      nodeSpacing = 200
+    )
 
   if (color) {
     # define map between state and node color
@@ -137,8 +138,10 @@ plot.Delayed <- function(x, color = TRUE, height = "500px", width = "100%", ...)
     legend_nodes_shape$shape <- c("square", "dot")
 
     legend_nodes <- rbind(legend_nodes_color, legend_nodes_shape)
-    network <- network %>% visLegend(useGroups = FALSE,
-                                     addNodes = legend_nodes)
+    network <- network %>% visLegend(
+      useGroups = FALSE,
+      addNodes = legend_nodes
+    )
   } else {
     network <- network %>% visGroups(
       groupname = "none",

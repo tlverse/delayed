@@ -19,5 +19,4 @@ error_message <- "this is an error"
 broken_delayed <- delayed_error(error_message)
 broken_delayed$expect_error <- TRUE
 result <- broken_delayed$compute()
-
 }

@@ -28,6 +28,5 @@ delayed_ident <- delayed_fun(ident_fun)
 d_list <- lapply(1:10, delayed_ident)
 d_bundle <- bundle_delayed(d_list)
 d_bundle$compute(progress = FALSE)
-
 }
 \keyword{internal}

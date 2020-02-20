@@ -7,7 +7,7 @@
 #' @import visNetwork
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' adder <- function(x, y) {
 #'   x + y
 #' }

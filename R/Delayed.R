@@ -11,7 +11,6 @@
 #' d <- delayed(3 + 4)
 #' methods::is(d, "Delayed")
 #' d$compute()
-#'
 #' @export
 Delayed <- R6Class(
   classname = "Delayed",
@@ -259,7 +258,6 @@ Delayed <- R6Class(
 #' @examples
 #' d <- delayed(3 + 4)
 #' d$compute()
-#'
 #' @export
 delayed <- function(expr, sequential = FALSE, expect_error = FALSE) {
   qexpr <- enquo(expr)
@@ -284,7 +282,6 @@ delayed <- function(expr, sequential = FALSE, expect_error = FALSE) {
 #' delayed_adder <- delayed_fun(adder)
 #' z <- delayed_adder(3, 4)
 #' z$compute()
-#'
 #' @export
 delayed_fun <- function(fun, sequential = FALSE, expect_error = FALSE) {
   fun_name <- as.character(match.call()[[2]])
@@ -321,7 +318,6 @@ delayed_fun <- function(fun, sequential = FALSE, expect_error = FALSE) {
 #' d_list <- lapply(1:10, delayed_ident)
 #' d_bundle <- bundle_delayed(d_list)
 #' d_bundle$compute(progress = FALSE)
-#'
 #' @export
 bundle_delayed <- function(delayed_list) {
   delayed_bundle <- delayed_fun(bundle_args, sequential = TRUE)

@@ -32,5 +32,4 @@ z2 <- delayed_adder(z, 4)
 z2$sequential <- TRUE
 z3 <- delayed_adder(z2, z)
 plot(z3)
-
 }

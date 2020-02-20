@@ -13,7 +13,7 @@ plot_delayed_shiny(scheduler)
 uses shiny
 }
 \examples{
-\donttest{
+\dontrun{
 adder <- function(x, y) {
   x + y
 }

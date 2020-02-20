@@ -69,8 +69,7 @@ computations via chaining of tasks:
 
 ``` r
 library(delayed)
-#> delayed: Framework for Parallelizing Dependent Tasks
-#> Version: 0.3.0
+#> delayed v0.3.0: Framework for Parallelizing Dependent Tasks
 
 # delay a function that does a bit of math
 mapfun <- function(x, y) {(x + y) / (x - y)}
@@ -100,7 +99,7 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -1.0246347 -0.9108675 -0.6907122 -2.4430224 -1.3264373 -0.7339712 -1.6518658
+#> [1] -0.7513028 -1.0716599 -0.7446260 -0.7310545 -0.8966311 -1.0160260 -0.6494779
 ```
 
 *Remark:* In the above, the delayed computation is carried out in

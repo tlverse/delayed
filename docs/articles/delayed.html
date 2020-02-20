@@ -81,7 +81,7 @@
 <code>delayed</code>: A Framework for Parallelizing Dependent Tasks</h1>
                         <h4 class="author">Jeremy R. Coyle</h4>
             
-            <h4 class="date">2020-02-05</h4>
+            <h4 class="date">2020-02-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tlverse/delayed/blob/master/vignettes/delayed.Rmd"><code>vignettes/delayed.Rmd</code></a></small>
       <div class="hidden name"><code>delayed.Rmd</code></div>
@@ -90,7 +90,7 @@
 
     
     
-<pre><code>## delayed v0.3.0: Framework for Parallelizing Dependent Tasks</code></pre>
+<pre><code>## delayed v0.3.0: A Framework for Parallelizing Dependent Tasks</code></pre>
 <p>R supports a range of options to parallelize computation. For an overview, see the <a href="https://CRAN.R-project.org/view=HighPerformanceComputing">HPC Task View</a> on CRAN. In general, these options work extremely well for problems that are <em>embarassingly parallel</em>, in that they support procedures such as parallel <code>lapply</code> calls and parallel <code>for</code> loops – essentially <code>map</code> operations. However, there is no easy way to parallelize <em>dependent</em> tasks in R.</p>
 <p>In contrast, the Python language has the excellent framework for exactly this purpose – <a href="http://dask.pydata.org/en/latest/"><code>dask</code></a>. <code>dask</code> makes it easy to build up a graph of interdependent tasks and then execute them in parallel in an order that optimizes performance <span class="citation">(Dask Development Team 2016)</span>. The present package seeks to reproduce a subset of that functionality in R, specifically the <a href="http://dask.pydata.org/en/latest/delayed.html"><code>delayed</code></a> module. To parallelize across the tasks, we leverage the excellent <a href="https://github.com/HenrikBengtsson/future/"><code>future</code></a> package <span class="citation">(Bengtsson 2017)</span>.</p>
 <p>The power of the <code>delayed</code> framework is best appreciated when demonstrated by example.</p>
@@ -138,8 +138,8 @@
 <pre><code>## [1] 10</code></pre>
 <p>We can visualize the dependency structure of these delayed tasks by calling <code>plot</code> on the resultant <code>Delayed</code> object:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(chained_delayed_<span class="dv">10</span>)</a></code></pre></div>
-<div id="htmlwidget-88cae53c1f2c15940d8b" style="width:100%;height:500px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-88cae53c1f2c15940d8b">{"x":{"nodes":{"id":["81eff0a4-4865-11ea-a6c8-144f8af010c2","81ef633c-4865-11ea-a6c8-144f8af010c2","81ef8d76-4865-11ea-a6c8-144f8af010c2"],"label":["adder(x = delayed_object_7, y = delayed_object_3)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"group":["resolved","resolved","resolved"],"shape":["dot","dot","dot"]},"edges":{"from":["81ef633c-4865-11ea-a6c8-144f8af010c2","81ef8d76-4865-11ea-a6c8-144f8af010c2"],"to":["81eff0a4-4865-11ea-a6c8-144f8af010c2","81eff0a4-4865-11ea-a6c8-144f8af010c2"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"nodeSpacing":200,"direction":"RL"}},"groups":{"waiting":{"color":{"border":"black","background":"white"}},"ready":{"color":{"border":"black","background":"orange"}},"running":{"color":{"border":"black","background":"lightgreen"}},"resolved":{"color":{"border":"black","background":"black"}},"useDefaultGroups":true,"error":{"color":{"border":"black","background":"lightpink"}}}},"groups":["resolved"],"width":"100%","height":"500px","idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["waiting","ready","running","resolved","error","sequential","parallel"],"color":[{"border":"black","background":"white"},{"border":"black","background":"orange"},{"border":"black","background":"lightgreen"},{"border":"black","background":"black"},{"border":"black","background":"lightpink"},{"border":"black","background":"white"},{"border":"black","background":"white"}],"shape":["dot","dot","dot","dot","dot","square","dot"]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script><hr>
+<div id="htmlwidget-7f38c988934d120bfdfc" style="width:100%;height:500px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7f38c988934d120bfdfc">{"x":{"nodes":{"id":["22d2a308-5415-11ea-9ac7-144f8af010c2","22d21596-5415-11ea-9ac7-144f8af010c2","22d2408e-5415-11ea-9ac7-144f8af010c2"],"label":["adder(x = delayed_object_7, y = delayed_object_3)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"group":["resolved","resolved","resolved"],"shape":["dot","dot","dot"]},"edges":{"from":["22d21596-5415-11ea-9ac7-144f8af010c2","22d2408e-5415-11ea-9ac7-144f8af010c2"],"to":["22d2a308-5415-11ea-9ac7-144f8af010c2","22d2a308-5415-11ea-9ac7-144f8af010c2"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"nodeSpacing":200,"direction":"RL"}},"groups":{"waiting":{"color":{"border":"black","background":"white"}},"ready":{"color":{"border":"black","background":"orange"}},"running":{"color":{"border":"black","background":"lightgreen"}},"resolved":{"color":{"border":"black","background":"black"}},"useDefaultGroups":true,"error":{"color":{"border":"black","background":"lightpink"}}}},"groups":["resolved"],"width":"100%","height":"500px","idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["waiting","ready","running","resolved","error","sequential","parallel"],"color":[{"border":"black","background":"white"},{"border":"black","background":"orange"},{"border":"black","background":"lightgreen"},{"border":"black","background":"black"},{"border":"black","background":"lightpink"},{"border":"black","background":"white"},{"border":"black","background":"white"}],"shape":["dot","dot","dot","dot","dot","square","dot"]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script><hr>
 </div>
 <div id="parallelization" class="section level2">
 <h2 class="hasAnchor">
@@ -153,13 +153,13 @@
 <a class="sourceLine" id="cb13-6" data-line-number="6">delayed_object_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/delayed.html">delayed</a></span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb13-7" data-line-number="7">chained_delayed_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">delayed_adder</span>(delayed_object_<span class="dv">7</span>, delayed_object_<span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co"># compute it using the future plan (two multicore workers), verbose mode lets us</span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co"># see the computation order</span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co"># compute it using the future plan (two multicore workers), verbose mode lets</span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co"># us see the computation order</span></a>
 <a class="sourceLine" id="cb13-11" data-line-number="11">chained_delayed_<span class="dv">10</span><span class="op">$</span><span class="kw">compute</span>(<span class="dt">nworkers =</span> <span class="dv">2</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## run:0 ready:2 workers:2</code></pre>
-<pre><code>## updating 3 + 4 from ready to running</code></pre>
-<pre><code>## run:1 ready:1 workers:2</code></pre>
 <pre><code>## updating 1 + 2 from ready to running</code></pre>
+<pre><code>## run:1 ready:1 workers:2</code></pre>
+<pre><code>## updating 3 + 4 from ready to running</code></pre>
 <pre><code>## run:2 ready:0 workers:2</code></pre>
 <pre><code>## updating 3 + 4 from running to resolved</code></pre>
 <pre><code>## updating 1 + 2 from running to resolved</code></pre>
