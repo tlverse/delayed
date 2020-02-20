@@ -83,7 +83,7 @@
             
             <h4 class="date">2020-02-20</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/tlverse/delayed/blob/master/vignettes/delayed.Rmd"><code>vignettes/delayed.Rmd</code></a></small>
+      
       <div class="hidden name"><code>delayed.Rmd</code></div>
 
     </div>
@@ -138,8 +138,8 @@
 <pre><code>## [1] 10</code></pre>
 <p>We can visualize the dependency structure of these delayed tasks by calling <code>plot</code> on the resultant <code>Delayed</code> object:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(chained_delayed_<span class="dv">10</span>)</a></code></pre></div>
-<div id="htmlwidget-7f38c988934d120bfdfc" style="width:100%;height:500px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7f38c988934d120bfdfc">{"x":{"nodes":{"id":["22d2a308-5415-11ea-9ac7-144f8af010c2","22d21596-5415-11ea-9ac7-144f8af010c2","22d2408e-5415-11ea-9ac7-144f8af010c2"],"label":["adder(x = delayed_object_7, y = delayed_object_3)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"group":["resolved","resolved","resolved"],"shape":["dot","dot","dot"]},"edges":{"from":["22d21596-5415-11ea-9ac7-144f8af010c2","22d2408e-5415-11ea-9ac7-144f8af010c2"],"to":["22d2a308-5415-11ea-9ac7-144f8af010c2","22d2a308-5415-11ea-9ac7-144f8af010c2"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"nodeSpacing":200,"direction":"RL"}},"groups":{"waiting":{"color":{"border":"black","background":"white"}},"ready":{"color":{"border":"black","background":"orange"}},"running":{"color":{"border":"black","background":"lightgreen"}},"resolved":{"color":{"border":"black","background":"black"}},"useDefaultGroups":true,"error":{"color":{"border":"black","background":"lightpink"}}}},"groups":["resolved"],"width":"100%","height":"500px","idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["waiting","ready","running","resolved","error","sequential","parallel"],"color":[{"border":"black","background":"white"},{"border":"black","background":"orange"},{"border":"black","background":"lightgreen"},{"border":"black","background":"black"},{"border":"black","background":"lightpink"},{"border":"black","background":"white"},{"border":"black","background":"white"}],"shape":["dot","dot","dot","dot","dot","square","dot"]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script><hr>
+<div id="htmlwidget-d162e09d4b1dc5fed2a8" style="width:100%;height:500px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d162e09d4b1dc5fed2a8">{"x":{"nodes":{"id":["906d96de-541a-11ea-84a4-144f8af010c2","906d0642-541a-11ea-84a4-144f8af010c2","906d31da-541a-11ea-84a4-144f8af010c2"],"label":["adder(x = delayed_object_7, y = delayed_object_3)","3 + 4","1 + 2"],"level":[1,2,2],"sequential":[false,false,false],"state":["resolved","resolved","resolved"],"group":["resolved","resolved","resolved"],"shape":["dot","dot","dot"]},"edges":{"from":["906d0642-541a-11ea-84a4-144f8af010c2","906d31da-541a-11ea-84a4-144f8af010c2"],"to":["906d96de-541a-11ea-84a4-144f8af010c2","906d96de-541a-11ea-84a4-144f8af010c2"],"label":["",""]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":"to"},"layout":{"hierarchical":{"enabled":true,"levelSeparation":500,"nodeSpacing":200,"direction":"RL"}},"groups":{"waiting":{"color":{"border":"black","background":"white"}},"ready":{"color":{"border":"black","background":"orange"}},"running":{"color":{"border":"black","background":"lightgreen"}},"resolved":{"color":{"border":"black","background":"black"}},"useDefaultGroups":true,"error":{"color":{"border":"black","background":"lightpink"}}}},"groups":["resolved"],"width":"100%","height":"500px","idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["waiting","ready","running","resolved","error","sequential","parallel"],"color":[{"border":"black","background":"white"},{"border":"black","background":"orange"},{"border":"black","background":"lightgreen"},{"border":"black","background":"black"},{"border":"black","background":"lightpink"},{"border":"black","background":"white"},{"border":"black","background":"white"}],"shape":["dot","dot","dot","dot","dot","square","dot"]},"nodesToDataframe":true}},"evals":[],"jsHooks":[]}</script><hr>
 </div>
 <div id="parallelization" class="section level2">
 <h2 class="hasAnchor">
@@ -157,9 +157,9 @@
 <a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co"># us see the computation order</span></a>
 <a class="sourceLine" id="cb13-11" data-line-number="11">chained_delayed_<span class="dv">10</span><span class="op">$</span><span class="kw">compute</span>(<span class="dt">nworkers =</span> <span class="dv">2</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## run:0 ready:2 workers:2</code></pre>
-<pre><code>## updating 1 + 2 from ready to running</code></pre>
-<pre><code>## run:1 ready:1 workers:2</code></pre>
 <pre><code>## updating 3 + 4 from ready to running</code></pre>
+<pre><code>## run:1 ready:1 workers:2</code></pre>
+<pre><code>## updating 1 + 2 from ready to running</code></pre>
 <pre><code>## run:2 ready:0 workers:2</code></pre>
 <pre><code>## updating 3 + 4 from running to resolved</code></pre>
 <pre><code>## updating 1 + 2 from running to resolved</code></pre>

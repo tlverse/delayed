@@ -120,7 +120,7 @@ evaluate asynchronously." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Future Delayed Jobs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tlverse/delayed/blob/master/R/Job.R'><code>R/Job.R</code></a></small>
+    
     <div class="hidden name"><code>FutureJob.Rd</code></div>
     </div>
 
@@ -132,10 +132,16 @@ evaluate asynchronously.</p>
 
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>future</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></span>(<span class='no'>multicore</span>, <span class='kw'>workers</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='delayed.html'>delayed</a></span>(<span class='fl'>3</span> + <span class='fl'>4</span>)
+<span class='no'>sched</span> <span class='kw'>&lt;-</span> <span class='no'>Scheduler</span>$<span class='fu'>new</span>(<span class='no'>d</span>, <span class='no'>FutureJob</span>, <span class='kw'>nworkers</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

@@ -33,7 +33,7 @@ Suggests:
     rmarkdown,
     shiny
 License: GPL-3
-URL: https://github.com/tlverse/delayed
+URL: https://tlverse.org/delayed
 BugReports: https://github.com/tlverse/delayed/issues
 Encoding: UTF-8
 LazyData: true

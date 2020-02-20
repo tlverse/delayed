@@ -1,5 +1,4 @@
 #' Scheduler class that orders compute tasks and dispatches tasks to workers
-#' via \code{make_future()}
 #'
 #' @docType class
 #'
@@ -8,7 +7,11 @@
 #' @importFrom future plan
 #' @importFrom progress progress_bar
 #'
-#' @keywords internal
+#' @examples
+#' d <- delayed(3 + 4)
+#' sched <- Scheduler$new(d, SequentialJob)
+#' sched$compute()
+#' @export
 Scheduler <- R6Class(
   classname = "Scheduler",
   cloneable = FALSE,

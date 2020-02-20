@@ -8,4 +8,9 @@
 A \code{Job} that leverages the \code{future} framework to
 evaluate asynchronously.
 }
-\keyword{internal}
+\examples{
+library(future)
+plan(multicore, workers = 1)
+d <- delayed(3 + 4)
+sched <- Scheduler$new(d, FutureJob, nworkers = 1)
+}

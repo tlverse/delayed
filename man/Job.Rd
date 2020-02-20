@@ -8,7 +8,7 @@
 A \code{Job} encapsulates the act of evaluating a given
 \code{delayed} object in a particular way. \code{SequentialJob}s evaluate
 immediately, blocking the current process until they are complete.
-'\code{FutureJob}s leverage the \code{future} package to evaluate according
-to the specified \code{future::plan}.
+\code{FutureJob}s leverages \pkg{future} to evaluate according to the
+specified \code{\link[future]{plan}}.
 }
 \keyword{internal}

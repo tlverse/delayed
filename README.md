@@ -6,12 +6,12 @@
 [![Travis-CI Build
 Status](https://travis-ci.org/tlverse/delayed.svg?branch=master)](https://travis-ci.org/tlverse/delayed)
 [![Build
-status](https://ci.appveyor.com/api/projects/status/wid97j656ga0elme?svg=true)](https://ci.appveyor.com/project/tlverse/delayed)
+status](https://ci.appveyor.com/api/projects/status/pmfudi6rvg9l6e9b?svg=true)](https://ci.appveyor.com/project/tlverse/delayed)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/tlverse/delayed/master.svg)](https://codecov.io/github/tlverse/delayed?branch=master)
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
@@ -99,7 +99,7 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -0.7513028 -1.0716599 -0.7446260 -0.7310545 -0.8966311 -1.0160260 -0.6494779
+#> [1] -1.0590197 -1.2266859 -1.5233663 -1.0842399 -0.8732744 -0.7108141 -0.9398295
 ```
 
 *Remark:* In the above, the delayed computation is carried out in

@@ -3,8 +3,8 @@
 #' @description A \code{Job} encapsulates the act of evaluating a given
 #' \code{delayed} object in a particular way. \code{SequentialJob}s evaluate
 #' immediately, blocking the current process until they are complete.
-#' '\code{FutureJob}s leverage the \code{future} package to evaluate according
-#' to the specified \code{future::plan}.
+#' \code{FutureJob}s leverages \pkg{future} to evaluate according to the
+#' specified \code{\link[future]{plan}}.
 #'
 #' @docType class
 #'
@@ -51,7 +51,10 @@ Job <- R6Class(
 #'
 #' @importFrom R6 R6Class
 #'
-#' @keywords internal
+#' @examples
+#' d <- delayed(3 + 4)
+#' sched <- Scheduler$new(d, SequentialJob)
+#' @export
 SequentialJob <- R6Class(
   classname = "SequentialJob",
   cloneable = FALSE,
@@ -98,7 +101,12 @@ SequentialJob <- R6Class(
 #' @importFrom R6 R6Class
 #' @importFrom future future resolved value
 #'
-#' @keywords internal
+#' @examples
+#' library(future)
+#' plan(multicore, workers = 1)
+#' d <- delayed(3 + 4)
+#' sched <- Scheduler$new(d, FutureJob, nworkers = 1)
+#' @export
 FutureJob <- R6Class(
   classname = "FutureJob",
   cloneable = FALSE,
