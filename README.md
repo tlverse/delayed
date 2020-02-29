@@ -9,6 +9,9 @@ Status](https://travis-ci.org/tlverse/delayed.svg?branch=master)](https://travis
 status](https://ci.appveyor.com/api/projects/status/pmfudi6rvg9l6e9b?svg=true)](https://ci.appveyor.com/project/tlverse/delayed)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/tlverse/delayed/master.svg)](https://codecov.io/github/tlverse/delayed?branch=master)
+[![CRAN](http://www.r-pkg.org/badges/version/delayed)](http://www.r-pkg.org/pkg/delayed)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/delayed)](https://CRAN.R-project.org/package=delayed)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -99,7 +102,7 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -1.0590197 -1.2266859 -1.5233663 -1.0842399 -0.8732744 -0.7108141 -0.9398295
+#> [1] -1.6276466 -0.9288561 -0.8650337 -1.1166554 -1.3161410 -0.8347015 -1.0424930
 ```
 
 *Remark:* In the above, the delayed computation is carried out in
