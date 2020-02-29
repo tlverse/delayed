@@ -39,15 +39,12 @@ online, or do so from within [R](https://www.r-project.org/).
 
 ## Installation
 
-<!--
 For standard use, we recommend installing the package from
 [CRAN](https://cran.r-project.org/) via
 
-
-```r
+``` r
 install.packages("delayed")
 ```
--->
 
 Install the most recent *stable release* from GitHub via
 [`devtools`](https://www.rstudio.com/products/rpackages/devtools/):
@@ -102,7 +99,7 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -1.6276466 -0.9288561 -0.8650337 -1.1166554 -1.3161410 -0.8347015 -1.0424930
+#> [1] -1.1601934 -0.4678799 -1.2152393 -0.8963905 -1.0718538 -1.0619060 -0.8325901
 ```
 
 *Remark:* In the above, the delayed computation is carried out in

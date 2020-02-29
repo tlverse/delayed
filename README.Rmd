@@ -43,14 +43,12 @@ online, or do so from within [R](https://www.r-project.org/).
 
 ## Installation
 
-<!--
 For standard use, we recommend installing the package from
 [CRAN](https://cran.r-project.org/) via
 
 ```{r cran-installation, eval = FALSE}
 install.packages("delayed")
 ```
--->
 
 Install the most recent _stable release_ from GitHub via
 [`devtools`](https://www.rstudio.com/products/rpackages/devtools/):
