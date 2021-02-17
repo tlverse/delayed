@@ -211,8 +211,8 @@ Scheduler <- R6Class(
           closest_dependent_count,
           private$.task_lists[["waiting"]]
         )
-        
-        orders <- sapply(ready_tasks,`[[`,"task_order")
+
+        orders <- sapply(ready_tasks, `[[`, "task_order")
         nrt <- ready_tasks[order(counts, orders)][[1]]
         return(nrt)
       } else {

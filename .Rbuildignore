@@ -26,3 +26,5 @@
 ^Makefile$
 ^LICENSE$
 ^CRAN-RELEASE$
+^doc$
+^Meta$
