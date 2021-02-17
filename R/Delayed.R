@@ -219,7 +219,12 @@ Delayed <- R6Class(
       }
       return(private$.sequential)
     },
-
+    task_order = function(force) {
+      if (!missing(force)) {
+        private$.task_order <- force
+      }
+      return(private$.task_order)
+    },
     expect_error = function(force) {
       if (!missing(force)) {
         private$.expect_error <- force
@@ -239,6 +244,7 @@ Delayed <- R6Class(
     .uuid = NULL,
     .sequential = FALSE,
     .expect_error = FALSE,
+    .task_order = NULL,
     .state = "waiting",
     .dependents = c()
   )
