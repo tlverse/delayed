@@ -5,8 +5,8 @@ adder <- function(x, y) {
 }
 
 delayed_adder <- delayed_fun(adder)
-make_adder_list <- function(){
-  bundle_delayed(lapply(1:4,delayed_adder, 4))
+make_adder_list <- function() {
+  bundle_delayed(lapply(1:4, delayed_adder, 4))
 }
 
 # big_adder <- make_adder_list()
@@ -36,11 +36,17 @@ plan(multisession, workers = nworkers)
 Sys.sleep(0.5)
 
 time_future_ms <- system.time({
-  result_future_ms <- big_adder$compute(FutureJob, nworkers=nworkers)
+  result_future_ms <- big_adder$compute(FutureJob, nworkers = nworkers)
 })
 
-print(data.frame(val=c(sum(unlist(result_sequential)), 
-                       sum(unlist(result_future_mc)),
-                       sum(unlist(result_future_ms))),
-                 time=rbind(time_sequential, time_future_mc,
-                            time_future_ms)))
+print(data.frame(
+  val = c(
+    sum(unlist(result_sequential)),
+    sum(unlist(result_future_mc)),
+    sum(unlist(result_future_ms))
+  ),
+  time = rbind(
+    time_sequential, time_future_mc,
+    time_future_ms
+  )
+))

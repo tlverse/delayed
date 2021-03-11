@@ -1,6 +1,6 @@
 Package: delayed
 Title: A Framework for Parallelizing Dependent Tasks
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person("Jeremy", "Coyle", email = "jeremyrcoyle@gmail.com",
            role = c("aut", "cre", "cph"),

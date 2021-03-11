@@ -64,6 +64,7 @@ Scheduler <- R6Class(
                                dependent_uuid = NULL) {
       state <- delayed_object$update_state
       uuid <- delayed_object$uuid
+      delayed_object$seed <- runif(1,0,1e6)
       private$.n_tasks <- private$.n_tasks + 1
       delayed_object$task_order <- private$.n_tasks
       assign(uuid, delayed_object, envir = private$.task_lists[[state]])
@@ -122,7 +123,7 @@ Scheduler <- R6Class(
       if ((nready > 0) && (nrunning < private$.nworkers)) {
         # get a ready task and assign it to a worker
         current_task <- self$next_ready_task
-        
+
         if (!is.null(current_task)) {
           job_type <- private$.job_type
 
@@ -223,11 +224,11 @@ Scheduler <- R6Class(
     delayed_object = function() {
       return(private$.delayed_object)
     },
-    time_left = function(){
+    time_left = function() {
       timeout <- self$delayed_object$timeout
-      if(is.null(timeout)){
+      if (is.null(timeout)) {
         return(Inf)
-      } else{
+      } else {
         time_elapsed <- (proc.time() - private$.start_time)[[3]]
         time_left <- timeout - time_elapsed
       }

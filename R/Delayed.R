@@ -32,7 +32,7 @@ Delayed <- R6Class(
 
       private$.sequential <- sequential
       private$.expect_error <- expect_error
-      if(!is.null(timeout)){
+      if (!is.null(timeout)) {
         private$.timeout <- timeout
       } else {
         private$.timeout <- Inf
@@ -191,7 +191,7 @@ Delayed <- R6Class(
 
       return(result)
     },
-    runtime = function(){
+    runtime = function() {
       return(private$.job$runtime)
     },
     state = function() {
@@ -244,6 +244,12 @@ Delayed <- R6Class(
         private$.timeout <- force
       }
       return(private$.timeout)
+    },
+    seed = function(force) {
+      if (!missing(force)) {
+        private$.seed <- force
+      }
+      return(private$.seed)
     }
   ),
 
@@ -261,7 +267,8 @@ Delayed <- R6Class(
     .task_order = NULL,
     .state = "waiting",
     .dependents = c(),
-    .timeout = NULL
+    .timeout = NULL,
+    .seed = NULL
   )
 )
 

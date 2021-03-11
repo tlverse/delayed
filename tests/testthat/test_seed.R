@@ -22,33 +22,23 @@ delayed_obj <- bundle_delayed(lapply(1:5, dgr))
 delayed1 <- unlist(delayed_obj$compute())
 
 
+plan(multicore, workers = 2)
+
 set.seed(1234)
 delayed_obj <- bundle_delayed(lapply(1:5, dgr))
 delayed2 <- unlist(delayed_obj$compute())
-
-plan(multicore, workers=2)
-set.seed(1234)
-delayed_obj <- bundle_delayed(lapply(1:5, dgr))
-delayed3 <- unlist(delayed_obj$compute())
-
-set.seed(1234)
-delayed_obj <- bundle_delayed(lapply(1:5, dgr))
-delayed4 <- unlist(delayed_obj$compute())
 
 print(non_delayed1)
 print(non_delayed2)
 print(delayed1)
 print(delayed2)
-print(delayed3)
-print(delayed4)
 
 test_that(
-  "sequential delayed preserves ordering (needed for RNG reproducibility",
+  "delayed preserves ordering (needed for RNG reproducibility)",
   expect_true(
     all(
       all.equal(non_delayed1, non_delayed2),
-      all.equal(delayed1, delayed2),
-      all.equal(delayed3, delayed4)
+      all.equal(delayed1, delayed2)
     )
   )
 )
