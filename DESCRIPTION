@@ -26,7 +26,8 @@ Imports:
     visNetwork,
     uuid,
     BBmisc,
-    progress
+    progress,
+    R.utils
 Suggests:
     testthat,
     knitr,

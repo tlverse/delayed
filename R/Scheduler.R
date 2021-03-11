@@ -24,7 +24,6 @@ Scheduler <- R6Class(
                           verbose = FALSE,
                           progress = FALSE, ...) {
       private$.delayed_object <- delayed_object
-
       private$.task_lists <- list(
         waiting = env(),
         ready = env(),
@@ -123,7 +122,7 @@ Scheduler <- R6Class(
       if ((nready > 0) && (nrunning < private$.nworkers)) {
         # get a ready task and assign it to a worker
         current_task <- self$next_ready_task
-
+        
         if (!is.null(current_task)) {
           job_type <- private$.job_type
 
@@ -131,6 +130,7 @@ Scheduler <- R6Class(
             SequentialJob$new(current_task)
             self$update_task(current_task, "ready", "running")
           } else {
+            current_task$timeout <- self$time_left
             job <- job_type$new(current_task)
             self$update_task(current_task, "ready", "running")
           }
@@ -182,11 +182,12 @@ Scheduler <- R6Class(
       return(updated_tasks)
     },
     compute = function() {
+      private$.start_time <- proc.time()
       while (!private$.delayed_object$resolved) {
         updated_tasks <- self$compute_step()
         if (length(updated_tasks) == 0) {
           # nothing was updated, so lets wait a bit before we check again
-          Sys.sleep(0.1)
+          Sys.sleep(0.01)
         }
       }
 
@@ -221,6 +222,17 @@ Scheduler <- R6Class(
     },
     delayed_object = function() {
       return(private$.delayed_object)
+    },
+    time_left = function(){
+      timeout <- self$delayed_object$timeout
+      if(is.null(timeout)){
+        return(Inf)
+      } else{
+        time_elapsed <- (proc.time() - private$.start_time)[[3]]
+        time_left <- timeout - time_elapsed
+      }
+
+      return(time_left)
     }
   ),
 
@@ -234,7 +246,8 @@ Scheduler <- R6Class(
     .verbose = FALSE,
     .progress = NULL,
     .n_tasks = 0,
-    .task_lists = list()
+    .task_lists = list(),
+    .start_time = NULL
   )
 )
 
