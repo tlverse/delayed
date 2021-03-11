@@ -27,7 +27,8 @@ Imports:
     uuid,
     BBmisc,
     progress,
-    R.utils
+    R.utils,
+    R.oo
 Suggests:
     testthat,
     knitr,
