@@ -1,56 +1,52 @@
 library(future)
-
-make_random_adder_graph <- function(seed) {
-  set.seed(seed)
-  adder <- function(x, y) {
-    # Sys.sleep(0.5)
-    x + y
-  }
-  delayed_adder <- delayed_fun(adder)
-
-  nums <- floor(runif(3, 1, 10))
-  delayed_tasks <- nums
-
-  for (i in 1:100) {
-    rand_args <- sample(delayed_tasks, 2)
-    new_task <- delayed_adder(rand_args[[1]], rand_args[[2]])
-    delayed_tasks <- c(delayed_tasks, new_task)
-  }
-
-  return(new_task)
+adder <- function(x, y) {
+  Sys.sleep(2)
+  x + y
 }
 
-adder_seed <- 1999
+delayed_adder <- delayed_fun(adder)
+make_adder_list <- function() {
+  bundle_delayed(lapply(1:4, delayed_adder, 4))
+}
 
-big_adder <- make_random_adder_graph(adder_seed)
-big_adder$compute()
-plot(big_adder)
-
-big_adder <- make_random_adder_graph(adder_seed)
+# big_adder <- make_adder_list()
+# big_adder$compute()
+# plot(big_adder)
 
 
-big_adder <- make_random_adder_graph(adder_seed)
+big_adder <- make_adder_list()
+
 time_sequential <- system.time({
   result_sequential <- big_adder$compute(SequentialJob)
 })
 
 nworkers <- 2
 
-big_adder <- make_random_adder_graph(adder_seed)
+big_adder <- make_adder_list()
 plan(multicore, workers = nworkers)
 Sys.sleep(0.5)
+
 time_future_mc <- system.time({
   result_future_mc <- big_adder$compute(FutureJob, nworkers = nworkers)
 })
 
-# big_adder <- make_random_adder_graph(adder_seed)
-# plan(multisession, workers = nworkers)
-# Sys.sleep(0.5)
-# time_future_ms <- system.time({
-#   result_future_ms <- big_adder$compute(FutureJob, nworkers=nworkers)
-# })
-#
-# data.frame(val=c(result_sequential, result_future_mc,
-#                  result_future_ms),
-#            time=rbind(time_sequential, time_future_mc,
-#                       time_future_ms))
+
+big_adder <- make_adder_list()
+plan(multisession, workers = nworkers)
+Sys.sleep(0.5)
+
+time_future_ms <- system.time({
+  result_future_ms <- big_adder$compute(FutureJob, nworkers = nworkers)
+})
+
+print(data.frame(
+  val = c(
+    sum(unlist(result_sequential)),
+    sum(unlist(result_future_mc)),
+    sum(unlist(result_future_ms))
+  ),
+  time = rbind(
+    time_sequential, time_future_mc,
+    time_future_ms
+  )
+))

@@ -1,3 +1,26 @@
+#' Helper Function to Evaluate Delayed
+#' @param to_eval a list as generated from Delayed$prepare_eval()
+#' @param timeout a timeout indicating when to terminate the job
+#' @export
+#' @importFrom R.utils withTimeout TimeoutException
+#' @importFrom R.oo throw
+eval_delayed <- function(to_eval, timeout = Inf) {
+  if (timeout < 0) {
+    R.oo::throw(R.utils::TimeoutException("time exhausted in other steps"))
+  }
+
+  result <- R.utils::withTimeout(
+    {
+      rlang::eval_bare(
+        expr = to_eval$expr,
+        env = to_eval$env
+      )
+    },
+    timeout = timeout
+  )
+  return(result)
+}
+
 #' Evaluation of Delayed Objects
 #'
 #' @description A \code{Job} encapsulates the act of evaluating a given
@@ -31,12 +54,17 @@ Job <- R6Class(
 
     value = function() {
       return(private$.result)
+    },
+
+    runtime = function() {
+      return(private$.runtime)
     }
   ),
 
   private = list(
     .delayed_object = NULL,
-    .result = NULL
+    .result = NULL,
+    .runtime = NULL
   )
 )
 
@@ -64,11 +92,11 @@ SequentialJob <- R6Class(
   public = list(
     initialize = function(delayed_object) {
       to_eval <- delayed_object$prepare_eval()
-      private$.result <- try({
-        rlang::eval_bare(
-          expr = to_eval$expr,
-          env = to_eval$env
-        )
+      private$.runtime <- system.time({
+        private$.result <- try({
+          set.seed(delayed_object$seed)
+          eval_delayed(to_eval, delayed_object$timeout)
+        })
       })
       super$initialize(delayed_object)
     }
@@ -115,13 +143,21 @@ FutureJob <- R6Class(
   inherit = Job,
   public = list(
     initialize = function(delayed_object) {
-      to_eval <- delayed_object$prepare_eval()
+      env <- list(
+        eval_delayed = eval_delayed,
+        to_eval = delayed_object$prepare_eval(),
+        timeout = delayed_object$timeout
+      )
+
+      private$.start_time <- proc.time()
       private$.future <- future(
-        expr = to_eval$expr,
-        env = to_eval$env,
+        expr = quote(eval_delayed(to_eval, timeout)),
+        # expr = to_eval$expr,
+        # env = to_eval$env,
         substitute = FALSE,
-        globals = as.list(to_eval$env),
-        packages = NULL
+        globals = env,
+        packages = NULL,
+        seed = delayed_object$seed
       )
       super$initialize(delayed_object)
     }
@@ -129,7 +165,11 @@ FutureJob <- R6Class(
 
   active = list(
     finished = function() {
-      return(resolved(private$.future))
+      finished <- resolved(private$.future)
+      if (finished) {
+        private$.runtime <- proc.time() - private$.start_time
+      }
+      return(finished)
     },
     value = function() {
       if (is.null(private$.result)) {
@@ -140,6 +180,7 @@ FutureJob <- R6Class(
   ),
 
   private = list(
-    .future = NULL
+    .future = NULL,
+    .start_time = NULL
   )
 )
