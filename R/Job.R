@@ -169,7 +169,7 @@ FutureJob <- R6Class(
     finished = function() {
       finished <- resolved(private$.future)
       if (finished) {
-        private$.runtime <- (proc.time() - private$.start_time)
+        private$.runtime <- (proc.time() - private$.start_time)[[3]]
       }
       return(finished)
     },
