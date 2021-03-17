@@ -136,6 +136,7 @@ Delayed <- R6Class(
       value <- scheduler$compute()
       return(value)
     }
+    
   ),
 
   active = list(
@@ -191,8 +192,17 @@ Delayed <- R6Class(
 
       return(result)
     },
-    runtime = function() {
+    runtime_self = function() {
       return(private$.job$runtime)
+    },
+    runtime = function(){
+      if(is.null(private$.runtime_total)){
+        sub_times <- sapply(self$delayed_dependencies,`[[`,"runtime")
+        
+        private$.runtime_total <- sum(unlist(sub_times))+self$runtime_self
+      }
+      
+      return(private$.runtime_total)
     },
     state = function() {
       return(private$.state)
@@ -268,6 +278,7 @@ Delayed <- R6Class(
     .state = "waiting",
     .dependents = c(),
     .timeout = NULL,
+    .runtime_total = NULL,
     .seed = NULL
   )
 )
