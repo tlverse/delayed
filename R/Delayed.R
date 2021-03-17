@@ -199,7 +199,7 @@ Delayed <- R6Class(
       if(is.null(private$.runtime_total)){
         sub_times <- sapply(self$delayed_dependencies,`[[`,"runtime")
         
-        private$.runtime_total <- sum(unlist(sub_times))+self$runtime_self
+        private$.runtime_total <- sum(unlist(sub_times))+self$runtime_self[[3]]
       }
       
       return(private$.runtime_total)
