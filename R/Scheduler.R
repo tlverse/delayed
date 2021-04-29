@@ -21,7 +21,7 @@ Scheduler <- R6Class(
     initialize = function(delayed_object,
                           job_type = FutureJob,
                           nworkers = NULL,
-                          verbose = getOption(delayed.verbose = FALSE),
+                          verbose = getOption("delayed.verbose"),
                           progress = FALSE, ...) {
       private$.delayed_object <- delayed_object
       private$.task_lists <- list(
