@@ -4,7 +4,7 @@
 #' @export
 #' @importFrom R.utils withTimeout TimeoutException
 #' @importFrom R.oo throw
-eval_delayed <- function(to_eval, timeout = Inf) {
+eval_delayed <- function(to_eval, timeout = Inf, name = "") {
   if (timeout < 0) {
     R.oo::throw(R.utils::TimeoutException("time exhausted in other steps"))
   }
@@ -16,12 +16,17 @@ eval_delayed <- function(to_eval, timeout = Inf) {
     setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
   })
 
+  stacktrace <- getOption("delayed.stacktrace")
+  dumpfile <- getOption("delayed.dumpfile")
   result <- tryCatchLog::tryCatchLog({
     result <- rlang::eval_bare(
       expr = to_eval$expr,
       env = to_eval$env
     )
-  })
+    }, execution.context.msg = name,
+    write.error.dump.file = dumpfile, 
+    include.full.call.stack = stacktrace,
+    include.compact.call.stack = FALSE)
   return(result)
 }
 
@@ -101,7 +106,9 @@ SequentialJob <- R6Class(
       set.seed(delayed_object$seed)
       private$.result <- try(
         {
-          eval_delayed(to_eval, delayed_object$timeout)
+          eval_delayed(to_eval, 
+                       delayed_object$timeout, 
+                       delayed_object$name)
         },
         silent = TRUE
       )
@@ -155,12 +162,13 @@ FutureJob <- R6Class(
       env <- list(
         eval_delayed = eval_delayed,
         to_eval = delayed_object$prepare_eval(),
-        timeout = delayed_object$timeout
+        timeout = delayed_object$timeout,
+        name = delayed_object$name
       )
 
       private$.start_time <- proc.time()
       private$.future <- future(
-        expr = quote(eval_delayed(to_eval, timeout)),
+        expr = quote(eval_delayed(to_eval, timeout, name)),
         # expr = to_eval$expr,
         # env = to_eval$env,
         substitute = FALSE,
