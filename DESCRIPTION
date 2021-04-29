@@ -28,7 +28,8 @@ Imports:
     BBmisc,
     progress,
     R.utils,
-    R.oo
+    R.oo,
+    tryCatchLog
 Suggests:
     testthat,
     knitr,

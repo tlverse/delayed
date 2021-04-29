@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="Find error in delayed chain — find_delayed_error" />
 <meta property="og:description" content="Searches through a network of delayed objects for the first
 object with state &quot;error&quot;" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -66,7 +69,7 @@ object with state &quot;error&quot;" />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -80,7 +83,7 @@ object with state &quot;error&quot;" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">delayed</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -120,7 +123,7 @@ object with state &quot;error&quot;" />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Find error in delayed chain</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/tlverse/delayed/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
     <div class="hidden name"><code>find_delayed_error.Rd</code></div>
     </div>
 
@@ -129,7 +132,7 @@ object with state &quot;error&quot;" />
 object with state "error"</p>
     </div>
 
-    <pre class="usage"><span class='fu'>find_delayed_error</span>(<span class='no'>delayed_object</span>)</pre>
+    <pre class="usage"><span class='fu'>find_delayed_error</span><span class='op'>(</span><span class='va'>delayed_object</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,19 +145,108 @@ object with state "error"</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>delayed_error</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='delayed.html'>delayed_fun</a></span>(<span class='no'>stop</span>)
-<span class='no'>error_message</span> <span class='kw'>&lt;-</span> <span class='st'>"this is an error"</span>
-<span class='no'>broken_delayed</span> <span class='kw'>&lt;-</span> <span class='fu'>delayed_error</span>(<span class='no'>error_message</span>)
-<span class='no'>broken_delayed</span>$<span class='no'>expect_error</span> <span class='kw'>&lt;-</span> <span class='fl'>TRUE</span>
-<span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='no'>broken_delayed</span>$<span class='fu'>compute</span>()</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>delayed_error</span> <span class='op'>&lt;-</span> <span class='fu'><a href='delayed.html'>delayed_fun</a></span><span class='op'>(</span><span class='va'>stop</span><span class='op'>)</span>
+<span class='va'>error_message</span> <span class='op'>&lt;-</span> <span class='st'>"this is an error"</span>
+<span class='va'>broken_delayed</span> <span class='op'>&lt;-</span> <span class='fu'>delayed_error</span><span class='op'>(</span><span class='va'>error_message</span><span class='op'>)</span>
+<span class='va'>broken_delayed</span><span class='op'>$</span><span class='va'>expect_error</span> <span class='op'>&lt;-</span> <span class='cn'>TRUE</span>
+<span class='va'>result</span> <span class='op'>&lt;-</span> <span class='va'>broken_delayed</span><span class='op'>$</span><span class='fu'>compute</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ERROR [2021-04-29 11:56:29] [ERROR] this is an error
+#&gt; 
+#&gt; Compact call stack:
+#&gt;   1 tryCatch(withCallingHandlers({
+#&gt; 
+#&gt; Full call stack:
+#&gt;   1 tryCatch(withCallingHandlers({
+#&gt;         NULL
+#&gt;         saveRDS(do.call(do.call
+#&gt;   2 tryCatchList(expr, classes, parentenv, handlers)
+#&gt;   3 tryCatchOne(tryCatchList(expr, names[-nh], parentenv, handlers[-nh]), names
+#&gt;   4 doTryCatch(return(expr), name, parentenv, handler)
+#&gt;   5 tryCatchList(expr, names[-nh], parentenv, handlers[-nh])
+#&gt;   6 tryCatchOne(expr, names, parentenv, handlers[[1]])
+#&gt;   7 doTryCatch(return(expr), name, parentenv, handler)
+#&gt;   8 withCallingHandlers({
+#&gt;         NULL
+#&gt;         saveRDS(do.call(do.call, c(readR
+#&gt;   9 saveRDS(do.call(do.call, c(readRDS("/var/folders/8m/0x4xq6v534j4y9f7jycckj5
+#&gt;   10 do.call(do.call, c(readRDS("/var/folders/8m/0x4xq6v534j4y9f7jycckj5c0000gn/
+#&gt;   11 (function (what, args, quote = FALSE, envir = parent.frame()) 
+#&gt;     {
+#&gt;       
+#&gt;   12 (function (..., crayon_enabled, crayon_colors, pkgdown_internet) 
+#&gt;     {
+#&gt;    
+#&gt;   13 pkgdown::build_site(...)
+#&gt;   14 build_site_local(pkg = pkg, examples = examples, run_dont_run = run_dont_ru
+#&gt;   15 build_reference(pkg, lazy = lazy, examples = examples, run_dont_run = run_d
+#&gt;   16 purrr::map(topics, build_reference_topic, pkg = pkg, lazy = lazy, examples 
+#&gt;   17 .f(.x[[i]], ...)
+#&gt;   18 withCallingHandlers(data_reference_topic(topic, pkg, examples = examples, r
+#&gt;   19 data_reference_topic(topic, pkg, examples = examples, run_dont_run = run_do
+#&gt;   20 run_examples(tags$tag_examples[[1]], env = new.env(parent = globalenv()), t
+#&gt;   21 highlight_examples(code, topic, env = env)
+#&gt;   22 downlit::evaluate_and_highlight(code, fig_save = fig_save_topic, env = chil
+#&gt;   23 evaluate::evaluate(code, child_env(env), new_device = TRUE)
+#&gt;   24 evaluate_call(expr, parsed$src[[i]], envir = envir, enclos = enclos, debug 
+#&gt;   25 timing_fn(handle(ev &lt;- withCallingHandlers(withVisible(eval(expr, envir, en
+#&gt;   26 handle(ev &lt;- withCallingHandlers(withVisible(eval(expr, envir, enclos)), wa
+#&gt;   27 try(f, silent = TRUE)
+#&gt;   28 tryCatch(expr, error = function(e) {
+#&gt;         call &lt;- conditionCall(e)
+#&gt;      
+#&gt;   29 tryCatchList(expr, classes, parentenv, handlers)
+#&gt;   30 tryCatchOne(expr, names, parentenv, handlers[[1]])
+#&gt;   31 doTryCatch(return(expr), name, parentenv, handler)
+#&gt;   32 withCallingHandlers(withVisible(eval(expr, envir, enclos)), warning = wHand
+#&gt;   33 withVisible(eval(expr, envir, enclos))
+#&gt;   34 eval(expr, envir, enclos)
+#&gt;   35 eval(expr, envir, enclos)
+#&gt;   36 broken_delayed$compute()
+#&gt;   37 scheduler$compute()
+#&gt;   38 self$compute_step()
+#&gt;   39 job_type$new(current_task)
+#&gt;   40 initialize(...)
+#&gt;   41 future(expr = quote(eval_delayed(to_eval, timeout)), substitute = FALSE, gl
+#&gt;   42 makeFuture(expr, substitute = FALSE, envir = envir, globals = globals, pack
+#&gt;   43 sequential(expr, envir = envir, substitute = FALSE, lazy = lazy, seed = see
+#&gt;   44 run(future)
+#&gt;   45 run.UniprocessFuture(future)
+#&gt;   46 eval(expr, envir = envir, enclos = baseenv())
+#&gt;   47 eval(expr, envir = envir, enclos = baseenv())
+#&gt;   48 base::tryCatch({
+#&gt;         base::withCallingHandlers({
+#&gt;             ...future.
+#&gt;   49 tryCatchList(expr, classes, parentenv, handlers)
+#&gt;   50 tryCatchOne(expr, names, parentenv, handlers[[1]])
+#&gt;   51 doTryCatch(return(expr), name, parentenv, handler)
+#&gt;   52 base::withCallingHandlers({
+#&gt;         ...future.value &lt;- base::withVisible(ba
+#&gt;   53 base::withVisible(base::local(eval_delayed(to_eval, timeout)))
+#&gt;   54 base::local(eval_delayed(to_eval, timeout))
+#&gt;   55 eval.parent(substitute(eval(quote(expr), envir)))
+#&gt;   56 eval(expr, p)
+#&gt;   57 eval(expr, p)
+#&gt;   58 eval(quote(eval_delayed(to_eval, timeout)), new.env())
+#&gt;   59 eval(quote(eval_delayed(to_eval, timeout)), new.env())
+#&gt;   60 eval_delayed(to_eval, timeout)
+#&gt;   61 tryCatchLog::tryCatchLog({
+#&gt;         result &lt;- rlang::eval_bare(expr = to_eva
+#&gt;   62 tryCatch(withCallingHandlers(expr, condition = cond.handler), ..., finally 
+#&gt;   63 tryCatchList(expr, classes, parentenv, handlers)
+#&gt;   64 withCallingHandlers(expr, condition = cond.handler)
+#&gt;   65 rlang::eval_bare(expr = to_eval$expr, env = to_eval$env)
+#&gt;   66 stop("this is an error")
+#&gt;   67 .handleSimpleError(function (c) 
+#&gt;     {
+#&gt;         log.message &lt;- c$message
+#&gt;    
+#&gt; 
+#&gt; </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -165,7 +257,7 @@ object with state "error"</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

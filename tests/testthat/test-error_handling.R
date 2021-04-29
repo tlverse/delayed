@@ -1,4 +1,3 @@
-library(delayed)
 library(testthat)
 library(future)
 context("Delayed Error Handling")

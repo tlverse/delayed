@@ -22,7 +22,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/
 
 **Author:** [Jeremy Coyle](https://github.com/jeremyrcoyle)
 
------
+------------------------------------------------------------------------
 
 ## What’s `delayed`?
 
@@ -35,7 +35,7 @@ use `delayed`, please consult the package
 [vignette](https://nhejazi.github.io/delayed/articles/delayed.html)
 online, or do so from within [R](https://www.r-project.org/).
 
------
+------------------------------------------------------------------------
 
 ## Installation
 
@@ -53,14 +53,14 @@ Install the most recent *stable release* from GitHub via
 devtools::install_github("tlverse/delayed")
 ```
 
------
+------------------------------------------------------------------------
 
 ## Issues
 
 If you encounter any bugs or have any specific feature requests, please
 [file an issue](https://github.com/tlverse/delayed/issues).
 
------
+------------------------------------------------------------------------
 
 ## Example
 
@@ -69,7 +69,7 @@ computations via chaining of tasks:
 
 ``` r
 library(delayed)
-#> delayed v0.3.0: Framework for Parallelizing Dependent Tasks
+#> delayed v0.4.0: A Framework for Parallelizing Dependent Tasks
 
 # delay a function that does a bit of math
 mapfun <- function(x, y) {(x + y) / (x - y)}
@@ -99,7 +99,7 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -1.1601934 -0.4678799 -1.2152393 -0.8963905 -1.0718538 -1.0619060 -0.8325901
+#> [1] -0.6688907 -1.2691496 -1.1808899 -1.7605806 -0.5992127 -0.6838026 -1.4086257
 ```
 
 *Remark:* In the above, the delayed computation is carried out in
@@ -107,7 +107,7 @@ parallel using the framework offered by the excellent [`future`
 package](https://github.com/HenrikBengtsson/future) and its associated
 ecosystem.
 
------
+------------------------------------------------------------------------
 
 ## License
 

@@ -64,7 +64,7 @@ Scheduler <- R6Class(
                                dependent_uuid = NULL) {
       state <- delayed_object$update_state
       uuid <- delayed_object$uuid
-      delayed_object$seed <- runif(1,0,1e6)
+      delayed_object$seed <- runif(1, 0, 1e6)
       private$.n_tasks <- private$.n_tasks + 1
       delayed_object$task_order <- private$.n_tasks
       assign(uuid, delayed_object, envir = private$.task_lists[[state]])

@@ -9,15 +9,19 @@ eval_delayed <- function(to_eval, timeout = Inf) {
     R.oo::throw(R.utils::TimeoutException("time exhausted in other steps"))
   }
 
-  result <- R.utils::withTimeout(
-    {
-      rlang::eval_bare(
-        expr = to_eval$expr,
-        env = to_eval$env
-      )
-    },
-    timeout = timeout
-  )
+  if (is.finite(timeout)) {
+    setTimeLimit(timeout, timeout, transient = TRUE)
+  }
+  on.exit({
+    setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
+  })
+
+  result <- tryCatchLog::tryCatchLog({
+    result <- rlang::eval_bare(
+      expr = to_eval$expr,
+      env = to_eval$env
+    )
+  })
   return(result)
 }
 
@@ -92,14 +96,17 @@ SequentialJob <- R6Class(
   public = list(
     initialize = function(delayed_object) {
       to_eval <- delayed_object$prepare_eval()
-      start_time <-proc.time()
+      start_time <- proc.time()
 
-      private$.result <- try({
-        set.seed(delayed_object$seed)
-        eval_delayed(to_eval, delayed_object$timeout)
-      })
+      set.seed(delayed_object$seed)
+      private$.result <- try(
+        {
+          eval_delayed(to_eval, delayed_object$timeout)
+        },
+        silent = TRUE
+      )
 
-      private$.runtime <- (proc.time()-start_time)[[3]]
+      private$.runtime <- (proc.time() - start_time)[[3]]
       super$initialize(delayed_object)
     }
   ),

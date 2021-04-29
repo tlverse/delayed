@@ -35,3 +35,11 @@ find_delayed_error <- function(delayed_object) {
 bundle_args <- function(...) {
   return(list(...))
 }
+
+get_all_runtimes <- function(delayed_obj) {
+  dd_runtimes <- lapply(delayed_obj$delayed_dependencies, get_all_runtimes)
+  this_runtime <- list(uuid = delayed_obj$uuid, runtime = delayed_obj$runtime_self)
+
+  result <- c(unlist(dd_runtimes, recursive = FALSE), list(this_runtime))
+  return(result)
+}
