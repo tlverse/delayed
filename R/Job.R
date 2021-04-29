@@ -11,11 +11,11 @@ eval_delayed <- function(to_eval, timeout = Inf, name = "") {
 
   if (is.finite(timeout)) {
     setTimeLimit(timeout, timeout, transient = TRUE)
+    on.exit({
+      setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
+    })
   }
-  on.exit({
-    setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
-  })
-
+  
   stacktrace <- getOption("delayed.stacktrace")
   dumpfile <- getOption("delayed.dumpfile")
   result <- tryCatchLog::tryCatchLog({
