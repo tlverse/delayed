@@ -92,12 +92,14 @@ SequentialJob <- R6Class(
   public = list(
     initialize = function(delayed_object) {
       to_eval <- delayed_object$prepare_eval()
-      private$.runtime <- system.time({
-        private$.result <- try({
-          set.seed(delayed_object$seed)
-          eval_delayed(to_eval, delayed_object$timeout)
-        })
+      start_time <-proc.time()
+
+      private$.result <- try({
+        set.seed(delayed_object$seed)
+        eval_delayed(to_eval, delayed_object$timeout)
       })
+
+      private$.runtime <- (proc.time()-start_time)[[3]]
       super$initialize(delayed_object)
     }
   ),
@@ -167,7 +169,7 @@ FutureJob <- R6Class(
     finished = function() {
       finished <- resolved(private$.future)
       if (finished) {
-        private$.runtime <- proc.time() - private$.start_time
+        private$.runtime <- (proc.time() - private$.start_time)[[3]]
       }
       return(finished)
     },

@@ -20,6 +20,8 @@ time_sequential <- system.time({
   result_sequential <- big_adder$compute(SequentialJob)
 })
 
+# test runtime logging
+expect_equivalent(time_sequential[[3]],big_adder$runtime, tol=0.1)
 nworkers <- 2
 
 big_adder <- make_adder_list()
