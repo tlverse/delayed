@@ -29,7 +29,9 @@ Imports:
     progress,
     R.utils,
     R.oo,
-    tryCatchLog
+    futile.logger,
+    tryCatchLog,
+    fs
 Suggests:
     testthat,
     knitr,

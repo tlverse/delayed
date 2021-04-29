@@ -4,12 +4,14 @@
 \alias{eval_delayed}
 \title{Helper Function to Evaluate Delayed}
 \usage{
-eval_delayed(to_eval, timeout = Inf)
+eval_delayed(to_eval, timeout = Inf, name = "")
 }
 \arguments{
 \item{to_eval}{a list as generated from Delayed$prepare_eval()}
 
 \item{timeout}{a timeout indicating when to terminate the job}
+
+\item{name}{the name of the delayed object (used for logging output)}
 }
 \description{
 Helper Function to Evaluate Delayed

@@ -1,6 +1,7 @@
 #' Helper Function to Evaluate Delayed
 #' @param to_eval a list as generated from Delayed$prepare_eval()
 #' @param timeout a timeout indicating when to terminate the job
+#' @param name the name of the delayed object (used for logging output)
 #' @export
 #' @importFrom R.utils withTimeout TimeoutException
 #' @importFrom R.oo throw
@@ -16,17 +17,12 @@ eval_delayed <- function(to_eval, timeout = Inf, name = "") {
     })
   }
   
-  stacktrace <- getOption("delayed.stacktrace")
-  dumpfile <- getOption("delayed.dumpfile")
-  result <- tryCatchLog::tryCatchLog({
+  result <- try_with_logs({
     result <- rlang::eval_bare(
       expr = to_eval$expr,
       env = to_eval$env
     )
-    }, execution.context.msg = name,
-    write.error.dump.file = dumpfile, 
-    include.full.call.stack = stacktrace,
-    include.compact.call.stack = FALSE)
+    }, context = name)
   return(result)
 }
 

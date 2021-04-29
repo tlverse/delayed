@@ -11,3 +11,6 @@
   options(delayed.dumpfile = FALSE)
   options(delayed.verbose = FALSE)
 }
+
+.delayed_env <- new.env()
+
