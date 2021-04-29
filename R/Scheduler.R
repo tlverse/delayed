@@ -21,7 +21,7 @@ Scheduler <- R6Class(
     initialize = function(delayed_object,
                           job_type = FutureJob,
                           nworkers = NULL,
-                          verbose = FALSE,
+                          verbose = getOption("delayed.verbose"),
                           progress = FALSE, ...) {
       private$.delayed_object <- delayed_object
       private$.task_lists <- list(
@@ -128,12 +128,12 @@ Scheduler <- R6Class(
           job_type <- private$.job_type
 
           if (current_task$sequential) {
-            SequentialJob$new(current_task)
             self$update_task(current_task, "ready", "running")
+            SequentialJob$new(current_task)
           } else {
+            self$update_task(current_task, "ready", "running")
             current_task$timeout <- self$time_left
             job <- job_type$new(current_task)
-            self$update_task(current_task, "ready", "running")
           }
 
           updated_tasks <- c(current_task)

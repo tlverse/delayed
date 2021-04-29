@@ -1,27 +1,28 @@
 #' Helper Function to Evaluate Delayed
 #' @param to_eval a list as generated from Delayed$prepare_eval()
 #' @param timeout a timeout indicating when to terminate the job
+#' @param name the name of the delayed object (used for logging output)
 #' @export
 #' @importFrom R.utils withTimeout TimeoutException
 #' @importFrom R.oo throw
-eval_delayed <- function(to_eval, timeout = Inf) {
+eval_delayed <- function(to_eval, timeout = Inf, name = "") {
   if (timeout < 0) {
     R.oo::throw(R.utils::TimeoutException("time exhausted in other steps"))
   }
 
   if (is.finite(timeout)) {
     setTimeLimit(timeout, timeout, transient = TRUE)
+    on.exit({
+      setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
+    })
   }
-  on.exit({
-    setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
-  })
-
-  result <- tryCatchLog::tryCatchLog({
+  
+  result <- try_with_logs({
     result <- rlang::eval_bare(
       expr = to_eval$expr,
       env = to_eval$env
     )
-  })
+    }, context = name)
   return(result)
 }
 
@@ -101,7 +102,9 @@ SequentialJob <- R6Class(
       set.seed(delayed_object$seed)
       private$.result <- try(
         {
-          eval_delayed(to_eval, delayed_object$timeout)
+          eval_delayed(to_eval, 
+                       delayed_object$timeout, 
+                       delayed_object$name)
         },
         silent = TRUE
       )
@@ -155,12 +158,13 @@ FutureJob <- R6Class(
       env <- list(
         eval_delayed = eval_delayed,
         to_eval = delayed_object$prepare_eval(),
-        timeout = delayed_object$timeout
+        timeout = delayed_object$timeout,
+        name = delayed_object$name
       )
 
       private$.start_time <- proc.time()
       private$.future <- future(
-        expr = quote(eval_delayed(to_eval, timeout)),
+        expr = quote(eval_delayed(to_eval, timeout, name)),
         # expr = to_eval$expr,
         # env = to_eval$env,
         substitute = FALSE,

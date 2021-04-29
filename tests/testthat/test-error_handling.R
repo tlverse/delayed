@@ -1,7 +1,6 @@
 library(testthat)
 library(future)
 context("Delayed Error Handling")
-
 delayed_error <- delayed_fun(stop)
 error_message <- "this is an error"
 

@@ -28,3 +28,4 @@
 ^CRAN-RELEASE$
 ^doc$
 ^Meta$
+^delayed_dump.*$
