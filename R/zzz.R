@@ -9,4 +9,5 @@
 .onLoad <- function(...){
   options(delayed.stacktrace = FALSE)
   options(delayed.dumpfile = FALSE)
+  options(delayed.verbose = FALSE)
 }
