@@ -14,11 +14,11 @@ knitr::opts_chunk$set(
 
 # R/`delayed`
 
-[![Travis-CI Build Status](https://travis-ci.org/tlverse/delayed.svg?branch=master)](https://travis-ci.org/tlverse/delayed)
-[![Build status](https://ci.appveyor.com/api/projects/status/pmfudi6rvg9l6e9b?svg=true)](https://ci.appveyor.com/project/tlverse/delayed)
-[![Coverage Status](https://img.shields.io/codecov/c/github/tlverse/delayed/master.svg)](https://codecov.io/github/tlverse/delayed?branch=master)
+[![R-CMD-check](https://github.com/tlverse/delayed/workflows/R-CMD-check/badge.svg)](https://github.com/tlverse/delayed/actions)
+[![Coverage Status](https://codecov.io/gh/tlverse/delayed/branch/master/graph/badge.svg)](https://codecov.io/gh/tlverse/delayed)
 [![CRAN](http://www.r-pkg.org/badges/version/delayed)](http://www.r-pkg.org/pkg/delayed)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/delayed)](https://CRAN.R-project.org/package=delayed)
+[![CRAN total downloads](http://cranlogs.r-pkg.org/badges/grand-total/origami)](https://CRAN.R-project.org/package=origami)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
@@ -101,7 +101,7 @@ ecosystem.
 
 ## License
 
-&copy; 2017-2020 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
+&copy; 2017-2021 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
 
 The contents of this repository are distributed under the GPL-3 license. See
 file `LICENSE` for details.
