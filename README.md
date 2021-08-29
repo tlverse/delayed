@@ -3,15 +3,14 @@
 
 # R/`delayed`
 
-[![Travis-CI Build
-Status](https://travis-ci.org/tlverse/delayed.svg?branch=master)](https://travis-ci.org/tlverse/delayed)
-[![Build
-status](https://ci.appveyor.com/api/projects/status/pmfudi6rvg9l6e9b?svg=true)](https://ci.appveyor.com/project/tlverse/delayed)
+[![R-CMD-check](https://github.com/tlverse/delayed/workflows/R-CMD-check/badge.svg)](https://github.com/tlverse/delayed/actions)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/tlverse/delayed/master.svg)](https://codecov.io/github/tlverse/delayed?branch=master)
+Status](https://codecov.io/gh/tlverse/delayed/branch/master/graph/badge.svg)](https://codecov.io/gh/tlverse/delayed)
 [![CRAN](http://www.r-pkg.org/badges/version/delayed)](http://www.r-pkg.org/pkg/delayed)
 [![CRAN
 downloads](https://cranlogs.r-pkg.org/badges/delayed)](https://CRAN.R-project.org/package=delayed)
+[![CRAN total
+downloads](http://cranlogs.r-pkg.org/badges/grand-total/origami)](https://CRAN.R-project.org/package=origami)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -69,7 +68,7 @@ computations via chaining of tasks:
 
 ``` r
 library(delayed)
-#> delayed v0.3.0: Framework for Parallelizing Dependent Tasks
+#> delayed v0.4.0: A Framework for Parallelizing Dependent Tasks
 
 # delay a function that does a bit of math
 mapfun <- function(x, y) {(x + y) / (x - y)}
@@ -99,7 +98,7 @@ chained_norm_pois$compute(nworkers = 2, verbose = TRUE)
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from ready to running
 #> run:1 ready:0 workers:2
 #> updating mapfun(x = delayed_norm, y = delayed_pois) from running to resolved
-#> [1] -1.1601934 -0.4678799 -1.2152393 -0.8963905 -1.0718538 -1.0619060 -0.8325901
+#> [1] -0.6688907 -1.2691496 -1.1808899 -1.7605806 -0.5992127 -0.6838026 -1.4086257
 ```
 
 *Remark:* In the above, the delayed computation is carried out in
@@ -111,7 +110,7 @@ ecosystem.
 
 ## License
 
-© 2017-2020 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
+© 2017-2021 [Jeremy R. Coyle](https://github.com/jeremyrcoyle)
 
 The contents of this repository are distributed under the GPL-3 license.
 See file `LICENSE` for details.
