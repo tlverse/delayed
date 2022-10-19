@@ -11,7 +11,7 @@ Authors@R: c(
 Description: Mechanisms to parallelize dependent tasks in a manner that
     optimizes the compute resources available. It provides access to "delayed"
     computations, which may be parallelized using futures. It is, to an extent,
-    a facsimile of the 'Dask' library (<https://dask.org/>), for the 'Python'
+    a facsimile of the 'Dask' library (<https://www.dask.org/>), for the 'Python'
     language.
 Depends:
     R (>= 3.2.0)
@@ -34,7 +34,7 @@ Suggests:
     rmarkdown,
     shiny
 License: GPL-3
-URL: https://tlverse.org/delayed
+URL: https://tlverse.org/delayed/
 BugReports: https://github.com/tlverse/delayed/issues
 Encoding: UTF-8
 LazyData: true
