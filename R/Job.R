@@ -95,7 +95,7 @@ SequentialJob <- R6Class(
       start_time <-proc.time()
 
       private$.result <- try({
-        set.seed(delayed_object$seed)
+        # set.seed(delayed_object$seed)
         eval_delayed(to_eval, delayed_object$timeout)
       })
 

@@ -13,7 +13,7 @@ make_adder_list <- function() {
 # big_adder$compute()
 # plot(big_adder)
 
-
+plan(sequential)
 big_adder <- make_adder_list()
 
 time_sequential <- system.time({
