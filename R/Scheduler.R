@@ -64,7 +64,14 @@ Scheduler <- R6Class(
                                dependent_uuid = NULL) {
       state <- delayed_object$update_state
       uuid <- delayed_object$uuid
-      delayed_object$seed <- runif(1,0,1e6)
+      
+      if (!(delayed_object$sequential || ("sequential"%in%attr(plan(),"class")))) {
+        # if we're using a parallel future plan, 
+        # we should set seeds for reproducibility
+        delayed_object$seed <- runif(1,0,1e6)
+      } 
+      
+      
       private$.n_tasks <- private$.n_tasks + 1
       delayed_object$task_order <- private$.n_tasks
       assign(uuid, delayed_object, envir = private$.task_lists[[state]])
@@ -127,7 +134,7 @@ Scheduler <- R6Class(
         if (!is.null(current_task)) {
           job_type <- private$.job_type
 
-          if (current_task$sequential) {
+          if (current_task$sequential || ("sequential"%in%attr(plan(),"class"))) {
             SequentialJob$new(current_task)
             self$update_task(current_task, "ready", "running")
           } else {

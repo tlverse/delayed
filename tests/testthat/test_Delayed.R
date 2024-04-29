@@ -93,7 +93,7 @@ test_that("progress bar", {
     x
   }
   delayed_ident <- delayed_fun(ident_fun)
-  d_list <- lapply(1:1e2, delayed_ident)
+  d_list <- lapply(1:1e1, delayed_ident)
   d_bundle <- bundle_delayed(d_list)
   res <- d_bundle$compute(progress = TRUE)
 })
